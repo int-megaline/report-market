@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maritime Bulletin 284</title>
+<style>html{visibility:hidden;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../auth-gate.css">
+<style>
+  :root{
+    --paper:#EEF2F1;
+    --surface:#FFFFFF;
+    --surface-2:#E4EAE8;
+    --ink:#16232C;
+    --ink-soft:#2B3A42;
+    --muted:#5B6D72;
+    --line:#D7DEDC;
+    --line-strong:#BFC9C6;
+    --accent:#1D5C8A;
+    --accent-strong:#0E3A57;
+    --accent-tint:#DCE9F1;
+    --highlight:#B9711F;
+    --highlight-tint:#F3E4D1;
+    --good:#3C7A5A;
+    --shadow:0 1px 2px rgba(14,58,87,0.06), 0 8px 24px rgba(14,58,87,0.06);
+    --radius:14px;
+    --radius-sm:8px;
+    --font-display:'Fraunces', Georgia, 'Noto Serif KR', serif;
+    --font-body:'Public Sans', -apple-system, 'Noto Sans KR', sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, 'Noto Sans Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0B1720;
+      --surface:#101F29;
+      --surface-2:#16262F;
+      --ink:#E9EEF0;
+      --ink-soft:#CBD6D9;
+      --muted:#8EA1A6;
+      --line:#22343D;
+      --line-strong:#2E434D;
+      --accent:#5EA6D8;
+      --accent-strong:#8FC4E8;
+      --accent-tint:#16303F;
+      --highlight:#E0A54C;
+      --highlight-tint:#2E2415;
+      --good:#6FBE94;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0B1720;
+    --surface:#101F29;
+    --surface-2:#16262F;
+    --ink:#E9EEF0;
+    --ink-soft:#CBD6D9;
+    --muted:#8EA1A6;
+    --line:#22343D;
+    --line-strong:#2E434D;
+    --accent:#5EA6D8;
+    --accent-strong:#8FC4E8;
+    --accent-tint:#16303F;
+    --highlight:#E0A54C;
+    --highlight-tint:#2E2415;
+    --good:#6FBE94;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);}
+  ::selection{ background:var(--accent-tint); }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    position:sticky; top:0; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(6px);
+  }
+  .masthead-inner{
+    max-width:960px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .brand{ display:flex; align-items:baseline; gap:8px; flex:none; text-decoration:none; color:inherit; }
+  .brand:hover .word{ color:var(--accent); }
+  .brand:hover{ text-decoration:none; }
+  .brand .word{
+    font-family:var(--font-display); font-weight:600; font-size:17px;
+    letter-spacing:0.01em; white-space:nowrap; transition:color .12s ease;
+  }
+  .brand .issue{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--muted);
+    border-left:1px solid var(--line-strong); padding-left:8px; white-space:nowrap;
+  }
+  .home-link{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft); text-decoration:none;
+  }
+  .home-link:hover{ background:var(--accent); border-color:var(--accent); color:#fff; text-decoration:none; }
+  .home-link svg{ width:16px; height:16px; }
+  nav.jump{ display:flex; gap:0; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; justify-content:flex-start; }
+  nav.jump::-webkit-scrollbar{ display:none; }
+  nav.jump a{
+    font-size:12px; font-weight:600; color:var(--muted); text-decoration:none;
+    padding:7px 8px; border-radius:999px; white-space:nowrap;
+  }
+  nav.jump a:hover{ background:var(--surface-2); color:var(--ink); }
+  .theme-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft);
+  }
+  .theme-toggle svg{ width:16px; height:16px; }
+
+  .masthead-controls{ display:flex; align-items:center; gap:8px; flex:none; }
+  .menu-wrap{ position:relative; flex:none; }
+  .menu-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .menu-toggle svg{ width:16px; height:16px; }
+  .menu-toggle[aria-expanded="true"]{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .menu-panel{
+    position:absolute; top:calc(100% + 8px); right:0; width:248px; z-index:60;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:12px;
+    box-shadow:var(--shadow); padding:8px; display:flex; flex-direction:column; gap:1px;
+    max-height:calc(100vh - 76px); overflow-y:auto;
+  }
+  .menu-panel[hidden]{ display:none; }
+  .menu-group-label{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); padding:8px 10px 4px;
+  }
+  .menu-panel a{
+    font-size:13px; color:var(--ink-soft); text-decoration:none; padding:8px 10px; border-radius:7px;
+  }
+  .menu-panel a:hover{ background:var(--surface-2); color:var(--ink); }
+  .menu-panel a.sub{ font-size:12.5px; color:var(--muted); padding-left:16px; }
+  .menu-divider{ height:1px; background:var(--line); margin:6px 4px; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 36px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--highlight); }
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(32px,5vw,46px);
+    line-height:1.12; margin:0 0 18px; text-wrap:balance; color:var(--accent-strong);
+  }
+  .lede{
+    font-size:16.5px; color:var(--ink-soft); max-width:64ch; margin:0 0 4px;
+  }
+  .lede b{ color:var(--ink); }
+  .source-line{
+    margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--muted);
+  }
+
+  /* ---------- manifest / kpi strip ---------- */
+  .manifest{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; margin:32px 0 8px;
+  }
+  .manifest .cell{ background:var(--surface); padding:18px 18px; }
+  .manifest .cell .num{
+    font-family:var(--font-display); font-weight:600; font-size:28px; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .manifest .cell .lbl{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  @media (max-width:720px){ .manifest{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- top stories ---------- */
+  .top-stories{ margin:40px 0 0; scroll-margin-top:76px; }
+  .top-stories h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .story-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .story-card{
+    display:block; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:16px 16px 14px; text-decoration:none; color:inherit; transition:border-color .15s;
+  }
+  .story-card:hover{ border-color:var(--accent); }
+  .story-card .cat-label{
+    font-family:var(--font-body); font-weight:600; font-size:11px; letter-spacing:0.02em; color:var(--accent);
+    margin-bottom:8px; display:block;
+  }
+  .story-card h3{ font-family:var(--font-display); font-size:15.5px; font-weight:600; margin:0 0 8px; line-height:1.35; color:var(--ink); }
+  .story-card p{ font-size:12.5px; color:var(--muted); margin:0; line-height:1.5; }
+  @media (max-width:820px){ .story-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .story-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- key indicators ---------- */
+  .indicators{ margin:44px 0 0; scroll-margin-top:76px; }
+  .indicators h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .ind-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ind-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; scroll-margin-top:76px;
+  }
+  .ind-card h3{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:0 0 3px; color:var(--ink); }
+  .ind-card .ind-note{ font-size:11.5px; color:var(--muted); margin:0 0 14px; }
+  .ind-row{ display:grid; grid-template-columns:112px 1fr 56px; align-items:center; gap:10px; padding:4px 0; }
+  .ind-row .ilbl{ font-size:12px; color:var(--ink-soft); }
+  .ind-row .itrack{ height:9px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .ind-row .ifill{ height:100%; border-radius:4px; background:var(--accent); }
+  .ind-row .ifill.dim{ background:var(--line-strong); }
+  .ind-row .ival{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); text-align:right; font-variant-numeric:tabular-nums; }
+  .ind-card .ind-src{ margin-top:12px; font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
+  .ind-card .ind-src a{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  .ind-card .ind-src a:hover{ border-bottom-style:solid; }
+  @media (max-width:720px){ .ind-grid{ grid-template-columns:1fr; } .ind-row{ grid-template-columns:96px 1fr 48px; } }
+
+  /* ---------- distribution bar chart ---------- */
+  .chart-block{ margin:44px 0 8px; }
+  .chart-block h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .bar-row{ display:grid; grid-template-columns:150px 1fr 34px; align-items:center; gap:12px; padding:6px 0; }
+  .bar-row .name{ font-size:13.5px; color:var(--ink-soft); }
+  .bar-track{ height:10px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--accent); border-radius:4px; }
+  .bar-row .count{ font-family:var(--font-mono); font-size:12.5px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
+
+  /* ---------- summary ---------- */
+  .summary{ margin:48px 0; padding:24px 26px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .summary h2{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 12px; color:var(--accent-strong); }
+  .summary p{ margin:0 0 12px; color:var(--ink-soft); font-size:15px; }
+  .summary p:last-child{ margin-bottom:0; }
+
+  /* ---------- category sections ---------- */
+  section.cat{ margin:56px 0; scroll-margin-top:76px; }
+  .cat-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; border-bottom:2px solid var(--ink); padding-bottom:12px; }
+  .cat-head .idx{ font-family:var(--font-mono); font-size:13px; color:var(--accent); font-weight:600; }
+  .cat-head h2{ font-family:var(--font-display); font-size:24px; font-weight:600; margin:0; }
+  .cat-head .cnt{ margin-left:auto; font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+  .cat-desc{ font-size:13.5px; color:var(--muted); margin:10px 0 22px; max-width:64ch; }
+
+  .article{ padding:18px 0; border-bottom:1px solid var(--line); }
+  .article:last-child{ border-bottom:none; }
+  .article h3{ font-family:var(--font-display); font-size:17px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .article p{ margin:0 0 10px; font-size:14.5px; color:var(--ink-soft); }
+  .article .meta{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .tag{ font-family:var(--font-mono); font-size:11px; padding:3px 8px; border-radius:5px; border:1px solid var(--line-strong); color:var(--muted); }
+  .tag.hl{ background:var(--highlight-tint); border-color:transparent; color:var(--highlight); font-weight:600; }
+  .src{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); }
+  .src::before{ content:"출처 · "; }
+  a.src{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  a.src:hover{ border-bottom-style:solid; }
+
+  /* ---------- footer ---------- */
+  footer{ margin-top:72px; padding:32px 0 56px; border-top:1px solid var(--line); }
+  footer .note{ font-size:13px; color:var(--muted); max-width:70ch; margin:0 0 10px; }
+  footer .gen{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:18px; }
+
+  @media (max-width:640px){
+    nav.jump{ display:none; }
+    .manifest{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:104px 1fr 28px; }
+  }
+
+  /* ---------- back to top ---------- */
+  .back-to-top{
+    position:fixed; right:20px; bottom:20px; z-index:50;
+    width:42px; height:42px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); color:var(--ink-soft); box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity .15s ease, transform .15s ease, background .12s ease;
+  }
+  .back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
+  .back-to-top:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .back-to-top svg{ width:18px; height:18px; }
+</style>
+</head>
+<body>
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <p class="auth-brand">MEGALINE</p>
+    <p class="auth-sub">Daily Maritime Report 로그인</p>
+    <form id="authForm">
+      <input type="email" id="authEmail" placeholder="이메일" autocomplete="username" required>
+      <input type="password" id="authPassword" placeholder="비밀번호" autocomplete="current-password" required>
+      <button type="submit">로그인</button>
+      <p class="auth-error" id="authError" hidden></p>
+    </form>
+    <a href="#" id="authForgot" class="auth-forgot">비밀번호를 잊으셨나요?</a>
+  </div>
+</div>
+<script>
+  // Optimistic reveal: if this browser was signed in last time, show the page
+  // immediately instead of waiting for Firebase's async session check (that
+  // check still runs via auth-gate.js and will correct this if it was wrong).
+  (function () {
+    try {
+      if (localStorage.getItem("mgDailyReportAuthed") === "1") {
+        var g = document.getElementById("authGate");
+        if (g) g.style.display = "none";
+        document.documentElement.style.visibility = "visible";
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="../" title="MEGALINE Daily Report 허브로 돌아가기">
+      <span class="word">Maritime Bulletin</span>
+      <span class="issue">No.284</span>
+    </a>
+    <nav class="jump">
+      <a href="#heavy">중량물·해양에너지</a>
+      <a href="#safety">안전·사고</a>
+      <a href="#geo">지정학·제재</a>
+      <a href="#newbuild">조선·신조</a>
+      <a href="#ports">항만·예인선</a>
+      <a href="#market">운임·유가 시장</a>
+      <a href="#altfuel">대체연료</a>
+    </nav>
+    <div class="masthead-controls">
+      <a class="home-link" href="../" aria-label="전체 리포트 목록으로" title="전체 리포트 목록으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10v9a1 1 0 0 0 1 1H9.5v-6h5v6H17.5a1 1 0 0 0 1-1v-9"></path></svg>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환" title="라이트/다크 전환">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+      <div class="menu-wrap">
+        <button class="menu-toggle" id="menuToggle" aria-haspopup="true" aria-expanded="false" aria-controls="menuPanel" aria-label="차트 바로가기 메뉴" title="차트 바로가기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </button>
+        <div class="menu-panel" id="menuPanel" role="menu" hidden>
+          <div class="menu-group-label">차트 바로가기</div>
+          <a href="#top-stories" role="menuitem">오늘의 주요 기사</a>
+          <a href="#kpi" role="menuitem">브리핑 개요 지표</a>
+          <a href="#dist-chart" role="menuitem">카테고리별 기사 분포</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">카테고리별 상세</div>
+          <a href="#heavy" role="menuitem">A · 중량물·해양에너지</a>
+          <a href="#safety" role="menuitem">B · 안전·사고</a>
+          <a href="#geo" role="menuitem">C · 지정학·제재</a>
+          <a href="#newbuild" role="menuitem">D · 조선·신조</a>
+          <a href="#ports" role="menuitem">E · 항만·예인선</a>
+          <a href="#market" role="menuitem">F · 운임·유가 시장</a>
+          <a href="#altfuel" role="menuitem">G · 대체연료</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">핵심 지표</div>
+          <a class="sub" href="#ind-baltic" role="menuitem">· 발틱 운임지수</a>
+          <a class="sub" href="#ind-earnings" role="menuitem">· 일일 용선료</a>
+          <a class="sub" href="#ind-oil" role="menuitem">· 유가</a>
+          <a class="sub" href="#ind-container" role="menuitem">· 美 컨테이너 수입</a>
+          <a class="sub" href="#ind-ethanol" role="menuitem">· 에탄올 벙커링 규모</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>DAILY BRIEFING · MEGALINE 참고용</div>
+    <h1>2026년 10월 21일자<br>해운·조선업계 데일리 브리핑</h1>
+    <p class="lede">Maasmond Maritime <b>Daily Collection of Maritime Press Clippings</b> 284호(2026-10-21, 45,300+ 구독자 대상 배포)를 토대로 재구성했습니다. 오늘은 컨테이너선 해상 사고, 세계 최대 규모 에탄올 벙커링, 중량물 운송·해양에너지 프로젝트, 러시아 조선업 제재, 예인선·터미널 투자, 운임·유가 동향까지 7개 축으로 묶었습니다.</p>
+    <div class="source-line">원본 · Google Drive "284-21-10-2026.pdf" (Drive 폴더 1zpoB58gu98WD74_k4kMMKUk0Sd1dSh-P)</div>
+  </section>
+
+  <section class="top-stories" id="top-stories">
+    <h2 class="mini">오늘의 주요 기사</h2>
+    <div class="story-grid">
+      <a class="story-card" href="#art-espirito">
+        <span class="cat-label">B · 안전·사고</span>
+        <h3>컨테이너선 ESPIRITO SANTO EXPRESS, 대서양 한복판서 폭발·화재</h3>
+        <p>싱가포르→산투스 항해 중 폭발 후 화재, 브라질 공군 KC-390 투입.</p>
+      </a>
+      <a class="story-card" href="#art-ethanol">
+        <span class="cat-label">G · 대체연료</span>
+        <h3>싱가포르, 세계 최대 규모 에탄올 벙커링 5,000톤 공급</h3>
+        <p>MAERSK HALIFAX 대상, 7월 바르셀로나 공급 대비 약 79% 확대.</p>
+      </a>
+      <a class="story-card" href="#art-boskalis">
+        <span class="cat-label">A · 중량물·해양에너지</span>
+        <h3>보스칼리스 MIGHTY SERVANT 3, 중국發 양식장 케이지 18기 노르웨이行</h3>
+        <p>오프쇼어 전용 세미서브 HTV가 양식업 모듈 운송에 투입된 이례적 사례.</p>
+      </a>
+      <a class="story-card" href="#art-baydunord">
+        <span class="cat-label">A · 중량물·해양에너지</span>
+        <h3>쉘, 에퀴노르 Bay du Nord 해양유전 지분 30% 인수</h3>
+        <p>FPSO 기반 심해 개발, 2027년초 FID·2031년 첫 생산 목표.</p>
+      </a>
+      <a class="story-card" href="#art-eusanctions">
+        <span class="cat-label">C · 지정학·제재</span>
+        <h3>EU, 러시아 조선소 23곳 등 역대 최대 규모 제재</h3>
+        <p>기업 826곳·임원 743명 블랙리스트, USC 산하 핵심 야드 대거 포함.</p>
+      </a>
+      <a class="story-card" href="#art-oilsurge">
+        <span class="cat-label">F · 운임·유가 시장</span>
+        <h3>중동·러시아발 공급 불안에 유가 급등, WTI 넉달 만에 100달러 돌파</h3>
+        <p>브렌트 $109.34·WTI $100.67, 호르무즈 공격·우크라이나 정유소 타격 영향.</p>
+      </a>
+    </div>
+  </section>
+
+  <div class="manifest" id="kpi">
+    <div class="cell"><div class="num">20</div><div class="lbl">분석 기사 수</div></div>
+    <div class="cell"><div class="num">7</div><div class="lbl">분류 카테고리</div></div>
+    <div class="cell"><div class="num">$110</div><div class="lbl">브렌트유, 5월來 최고</div></div>
+    <div class="cell"><div class="num">23곳</div><div class="lbl">EU 제재 러시아 조선소</div></div>
+    <div class="cell"><div class="num">5,000t</div><div class="lbl">역대 최대 에탄올 벙커링</div></div>
+  </div>
+
+  <div class="chart-block" id="dist-chart">
+    <h2 class="mini">카테고리별 기사 분포</h2>
+    <div class="bar-row"><div class="name">조선·신조</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="count">5</div></div>
+    <div class="bar-row"><div class="name">항만·예인선</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="count">4</div></div>
+    <div class="bar-row"><div class="name">운임·유가 시장</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="count">4</div></div>
+    <div class="bar-row"><div class="name">중량물·해양에너지</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">지정학·제재</div><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><div class="count">2</div></div>
+    <div class="bar-row"><div class="name">안전·사고</div><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><div class="count">1</div></div>
+    <div class="bar-row"><div class="name">대체연료</div><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><div class="count">1</div></div>
+  </div>
+
+  <section class="indicators" id="indicators">
+    <h2 class="mini">핵심 지표 한눈에 보기</h2>
+    <div class="ind-grid">
+      <div class="ind-card" id="ind-baltic">
+        <h3>건화물 운임, 케이프사이즈가 주도한 3주 연속 하락</h3>
+        <p class="ind-note">2026-10-16(금) 종가 기준, 세부지수 비교.</p>
+        <div class="ind-row"><div class="ilbl">케이프사이즈</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">3,249pt (-2.2%)</div></div>
+        <div class="ind-row"><div class="ilbl">발틱종합(BDI)</div><div class="itrack"><div class="ifill dim" style="width:77%"></div></div><div class="ival">2,511pt (-1.3%)</div></div>
+        <div class="ind-row"><div class="ilbl">파나막스</div><div class="itrack"><div class="ifill dim" style="width:71%"></div></div><div class="ival">2,314pt (-1.8%)</div></div>
+        <div class="ind-row"><div class="ilbl">수프라막스</div><div class="itrack"><div class="ifill dim" style="width:57%"></div></div><div class="ival">1,865pt (+0.5%)</div></div>
+        <div class="ind-src">출처 · <a href="https://www.bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-index-stays-in-the-doldrums-as-capesize-rates-slide-further" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+      </div>
+      <div class="ind-card" id="ind-earnings">
+        <h3>케이프사이즈·파나막스 일일 용선료 동반 하락</h3>
+        <p class="ind-note">전일 대비 증감, 2026-10-16 기준.</p>
+        <div class="ind-row"><div class="ilbl">케이프사이즈</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">$25,961 (-$664)</div></div>
+        <div class="ind-row"><div class="ilbl">파나막스</div><div class="itrack"><div class="ifill dim" style="width:80%"></div></div><div class="ival">$20,827 (-$373)</div></div>
+        <div class="ind-src">출처 · <a href="https://www.bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-index-stays-in-the-doldrums-as-capesize-rates-slide-further" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+      </div>
+      <div class="ind-card" id="ind-oil">
+        <h3>브렌트·WTI 동반 급등, WTI 넉달 만에 100달러대 복귀</h3>
+        <p class="ind-note">2026-10-16(금) 종가, 전일 대비.</p>
+        <div class="ind-row"><div class="ilbl">브렌트유</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">$109.34 (+3.2%)</div></div>
+        <div class="ind-row"><div class="ilbl">WTI</div><div class="itrack"><div class="ifill dim" style="width:92%"></div></div><div class="ival">$100.67 (+2.8%)</div></div>
+        <div class="ind-src">출처 · <a href="https://www.bairdmaritime.com/shipping/tankers/oil-prices-surge-as-middle-east-and-russian-supply-jitters-mount" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+      </div>
+      <div class="ind-card" id="ind-container">
+        <h3>9월 美 컨테이너 수입, 역대 최고 — 中 비중 36%</h3>
+        <p class="ind-note">데카르트시스템즈 집계, 전년 동월 대비.</p>
+        <div class="ind-row"><div class="ilbl">전체(전 출발지)</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">254.6만 TEU (+10.3%)</div></div>
+        <div class="ind-row"><div class="ilbl">중국發</div><div class="itrack"><div class="ifill dim" style="width:36%"></div></div><div class="ival">92.4만 TEU (+21.2%)</div></div>
+        <div class="ind-src">출처 · <a href="https://www.bairdmaritime.com/shipping/boxships/china-shipment-surge-powers-us-container-imports-to-fresh-monthly-high" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+      </div>
+      <div class="ind-card" id="ind-ethanol">
+        <h3>싱가포르 에탄올 벙커링, 전월 대비 약 79% 대형화</h3>
+        <p class="ind-note">1회 공급 물량 비교, 2026년.</p>
+        <div class="ind-row"><div class="ilbl">싱가포르(10월, MAERSK HALIFAX)</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">5,000톤</div></div>
+        <div class="ind-row"><div class="ilbl">바르셀로나(7월, Antonia Mærsk)</div><div class="itrack"><div class="ifill dim" style="width:56%"></div></div><div class="ival">2,800톤</div></div>
+        <div class="ind-src">출처 · <a href="https://www.manifoldtimes.com/news/golden-island-completes-worlds-largest-ethanol-bunkering-operation-in-singapore/" target="_blank" rel="noopener">Manifold Times</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="summary">
+    <h2>오늘의 핵심 흐름</h2>
+    <p>오늘자 클리핑을 관통하는 축은 에너지 안보 불안이 해운·조선 전 영역에 동시다발로 파급되는 모습이다. 호르무즈 해협 공격 증가와 우크라이나의 러시아 정유시설 타격이 겹치며 브렌트유는 장중 110달러까지, WTI는 넉 달 만에 100달러대를 재돌파했다. 같은 날 EU는 러시아 조선소 23곳을 포함한 역대 최대 규모 제재를 발표하고 지중해 해군작전 IRINI의 임무도 '그림자 선단' 대응까지 확대했다 — 러시아를 겨냥한 에너지·조선 양면 압박이 동시에 강화되는 흐름이다.</p>
+    <p>대체연료 전환은 파일럿에서 상업 규모로 넘어가는 변곡점을 보여준다. 싱가포르의 5,000톤 에탄올 벙커링은 7월 바르셀로나 공급 대비 약 79% 확대된 규모로, 컨테이너 하역과 동시 진행(SIMOPS)까지 성공하며 정기선사의 운항 스케줄에 실제로 끼워 넣을 수 있다는 점을 입증했다. CSSC 톈진의 올해 다섯 번째 메탄올 이중연료선 인도, 캐나다의 메탄올 이중연료 예인선 투입과 맞물려 대체연료가 특정 선종의 실험을 넘어 선대 전반의 표준 옵션으로 자리잡는 양상이다.</p>
+    <p>중량물 운송 수요 측면에서는 긍정적 신호가 이어졌다. 보스칼리스의 세미서브 HTV가 중국發 양식장 모듈을 노르웨이로 나르는 이례적 사례는 오프쇼어 전용 선대가 전통적 에너지 화물을 넘어 수요처를 넓히고 있음을 보여주고, 쉘의 Bay du Nord 지분 인수(2027년초 FID, 2031년 첫 생산)와 Northern Lights CCS 2단계 서브시 발주는 2~3년 뒤 실제 중량물 운송 수요로 이어질 프로젝트 파이프라인이 계속 두터워지고 있음을 시사한다. 다만 케이프사이즈 운임이 3주 연속, 주간 25% 급락한 점은 벌크 시장의 단기 체력이 녹록지 않음을 보여준다.</p>
+    <p>한편 컨테이너선 ESPIRITO SANTO EXPRESS의 대서양 한복판 폭발·화재는 정기선 안전 운항의 긴장을 다시 일깨운다. 브라질 공군까지 투입된 대규모 구조작전과 별개로 본지 확인 시점까지 선박은 추진력을 잃은 채 표류 중이었다 — 화물·보험 이해관계자는 후속 예인·구조 진행 상황을 주시할 필요가 있다.</p>
+  </div>
+
+  <section class="cat" id="heavy">
+    <div class="cat-head"><span class="idx">A</span><h2>중량물·해양에너지</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-boskalis">
+      <h3>보스칼리스, 세미서브 HTV로 중국發 양식장 케이지 18기 노르웨이 운송</h3>
+      <p>보스칼리스의 중량물 반잠수식 운송선 <b>MIGHTY SERVANT 3</b>가 노르웨이 Seafarming Systems의 폐쇄형 양식장 케이지 6기용 프리팹 섹션 18개를 중국에서 노르웨이로 운송 중이다. 모듈 단위로 분할 운송해 현지에서 조립하는 방식으로, 2020년 BOKA VANGUARD의 HAVFARM 1(385m) 운송에 이은 오프쇼어 HTV 선대의 양식업 진출 두 번째 사례다.</p>
+      <div class="meta"><span class="tag hl">HTV 연관</span><a class="src" href="https://breakbulk.news/boskalis-ships-18-fish-farm-cage-sections-from-china-to-norway/" target="_blank" rel="noopener">Breakbulk.News</a></div>
+    </div>
+
+    <div class="article" id="art-baydunord">
+      <h3>쉘, 에퀴노르 Bay du Nord 해양유전 지분 30% 인수</h3>
+      <p>쉘이 캐나다 뉴펀들랜드 연안 약 500km 플레미시 패스 해역의 Bay du Nord 해양유전 개발에 30% 지분으로 참여한다. 에퀴노르가 70% 지분과 운영권을 유지하며, 사업비는 약 C$140억 규모. 수심 600~1,170m 해역에 FPSO 기반 단계적 서브시 개발을 계획 중이며, 최종투자결정(FID)은 2027년 초, 첫 생산은 2031년 목표다.</p>
+      <div class="meta"><span class="tag hl">FID 추적</span><a class="src" href="https://www.worldoil.com/news/2026/10/9/shell-to-acquire-30-stake-in-equinor-s-bay-du-nord-offshore-oil-project/" target="_blank" rel="noopener">World Oil</a></div>
+    </div>
+
+    <div class="article" id="art-worley">
+      <h3>Worley Rosenberg, Subsea7 발주 노르웨이 CCS 서브시 구조물 수주</h3>
+      <p>Worley Rosenberg가 노르웨이 Northern Lights CCS 프로젝트 2단계용 서브시 스풀·구조물 제작 계약을 Subsea7로부터 수주했다. 2단계 완공 시 연간 CO2 운송·저장 용량이 150만 톤에서 500만 톤 이상으로 확대되며, 2025년 3월 FID를 거쳐 추진 중이다.</p>
+      <div class="meta"><a class="src" href="https://www.worldoil.com/news/2026/10/16/worley-rosenberg-wins-subsea7-contract-for-northern-lights-ccs-project/" target="_blank" rel="noopener">World Oil</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="safety">
+    <div class="cat-head"><span class="idx">B</span><h2>안전·사고</h2><span class="cnt">1건</span></div>
+
+    <div class="article" id="art-espirito">
+      <h3>컨테이너선 ESPIRITO SANTO EXPRESS, 대서양서 폭발·화재로 표류</h3>
+      <p>Hapag-Lloyd 용선·Seaspan 소유 컨테이너선 <b>ESPIRITO SANTO EXPRESS</b>(IMO 9793923)가 10월 15~16일 싱가포르→브라질 산투스 항해 중 트리스탄다쿠냐 북서쪽 해상에서 폭발 후 화재가 발생했다. 브라질 공군이 10월 16일 KC-390 수송기를 투입해 구조작전을 지원했다. 선사 측 공지(BARBUSS) 기준 승선원 25명 전원이 대피했으며, 본지 확인 시점 기준 선박은 추진력을 상실한 채 화재가 진행 중인 상태였다.</p>
+      <div class="meta"><span class="tag hl">주요 해상사고</span><a class="src" href="https://aeroin.net/embraer-kc-390-da-fab-voa-mais-de-1-700-quilometros-oceano-atlantico-adentro-para-ajudar-navio-a-deriva/" target="_blank" rel="noopener">AEROIN</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="geo">
+    <div class="cat-head"><span class="idx">C</span><h2>지정학·제재</h2><span class="cnt">2건</span></div>
+
+    <div class="article" id="art-eusanctions">
+      <h3>EU, 러시아 조선소 23곳 포함 역대 최대 규모 대러 제재</h3>
+      <p>EU가 10월 12일 러시아 기업 826곳과 임원 743명을 제재 리스트에 추가했다 — 2022년 우크라이나 전쟁 이후 최대 규모 확대다. 제재 대상에는 Admiralty Shipyards(상트페테르부르크), Sevmash(세베로드빈스크), Severnaya Verf 등 러시아 최대 조선 그룹 USC 산하 핵심 조선소·수리시설 23곳이 포함됐다. 자산 동결과 자금 지원 금지가 핵심이며, 민간 상선의 건조·인도 자체를 전면 금지하지는 않는다.</p>
+      <div class="meta"><span class="tag hl">러시아 제재</span><a class="src" href="https://maritime-executive.com/article/eu-sanctions-russian-shipbuilding-sector-from-top-yards-to-small-supplier" target="_blank" rel="noopener">Maritime Executive</a></div>
+    </div>
+
+    <div class="article" id="art-irini">
+      <h3>EU 지중해 해군작전 IRINI, 2029년까지 연장·'그림자 선단' 대응 임무 추가</h3>
+      <p>EU 지중해 해군작전 EUNAVFOR MED IRINI의 임무가 2029년 3월까지 연장됐다(10월 13일 발표, 기존 종료 예정은 2027년 3월). 러시아 '그림자 선단' 제한, 해양영역인식 강화, 해저 인프라 보호 임무가 새로 추가됐다. 기함 ITS THAON DI REVEL은 8월 2일 팬텔레리아 서쪽 해상에서 제재 대상 유조선 TOA PAYOH를 검문한 바 있다.</p>
+      <div class="meta"><a class="src" href="https://www.bairdmaritime.com/security/naval/operation-irini-mandate-extended-2029" target="_blank" rel="noopener">Baird Maritime</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="newbuild">
+    <div class="cat-head"><span class="idx">D</span><h2>조선·신조</h2><span class="cnt">5건</span></div>
+
+    <div class="article" id="art-icebreaker">
+      <h3>시스팬, 캐나다 역대 최대 쇄빙선 CCGS IMNARYUAQ 용골 거치</h3>
+      <p>시스팬 조선소가 10월 14일 밴쿠버 조선소에서 캐나다가 건조하는 역대 최대 극지 쇄빙선 CCGS IMNARYUAQ의 용골을 거치했다. 전장 158m, 전폭 28m, 배수량 26,036톤, Polar Class 2급으로 설비 출력 47MW를 갖추며, 캐나다 National Shipbuilding Strategy의 일곱 번째 건조 선박이다. 인도는 2030년대 초로 예정돼 있다.</p>
+      <div class="meta"><a class="src" href="https://www.bairdmaritime.com/work-boat-world/icebreaking/seaspan-lays-keel-polar-icebreaker" target="_blank" rel="noopener">Baird Maritime</a></div>
+    </div>
+
+    <div class="article" id="art-lorenzaccio">
+      <h3>CSSC(톈진), CMA CGM에 올해 다섯 번째 메탄올 이중연료 컨테이너선 인도</h3>
+      <p>다롄조선(DSIC) 계열 CSSC(톈진)조선이 10월 15일 CMA CGM LORENZACCIO(약 16,136TEU급, 전장 360m)를 계약 기한보다 16일 앞당겨 인도했다. CSSC 톈진이 올해 인도한 다섯 번째 메탄올 이중연료 컨테이너선으로, 선형 최적화와 에너지관리시스템을 통해 연비·탄소배출 규제 대응력을 높였다.</p>
+      <div class="meta"><a class="src" href="https://www.imarinenews.com/39977.html" target="_blank" rel="noopener">IMarine</a></div>
+    </div>
+
+    <div class="article" id="art-keyfield">
+      <h3>말레이시아 Keyfield, 첫 대형 준설선 INAI KENANGA 인도받아 준설업 진출</h3>
+      <p>오일가스 서비스 업체 Keyfield가 호퍼 용량 32,205㎥급 대형 트레일링 흡입식 준설선(TSHD) INAI KENANGA를 인도받았다 — 자사 선대 최대 선박이자 준설업 첫 진출이다. 대형 매립·항로 준설·연안 개발 공사 지원이 가능하다.</p>
+      <div class="meta"><a class="src" href="https://www.bairdmaritime.com/marine-projects/dredging/keyfield-receives-inai-kenanga-dredger" target="_blank" rel="noopener">Baird Maritime</a></div>
+    </div>
+
+    <div class="article" id="art-samarthak">
+      <h3>인도 해군, 민간 조선소 건조 첫 대형 함정 INS SAMARTHAK 취역</h3>
+      <p>L&T조선이 건조한 다목적함(MPV) INS SAMARTHAK이 10월 16일 인도 해군에 취역했다. 자국 조달 비중 75% 이상으로, 해상 감시·정찰, 연안 초계, 재해구호 임무를 수행한다. 인도 민간 조선소가 건조한 주요 함정의 첫 취역 사례로 꼽힌다.</p>
+      <div class="meta"><a class="src" href="https://newsonair.gov.in/vice-president-commissions-indigenously-built-ins-samarthak-into-indian-navy-in-karnataka/" target="_blank" rel="noopener">newsonair (인도 정부 공영매체)</a></div>
+    </div>
+
+    <div class="article" id="art-gsi">
+      <h3>中 교량 건설사, 선박 블록 제작으로 조선 공급망 진출 가속</h3>
+      <p>광저우조선(GSI)이 10월 13일 China Railway Shanhaiguan Bridge Group과 선체 블록 외주 제작 협약을 체결했다 — GSI의 신조 인도 일정은 2030년까지 이어진다. 앞서 China Railway Baoji Bridge Group 산하사는 7만3,000dwt급 데크캐리어용, Jingjiang Heavy Industry는 4만400dwt급 벌크선용 블록을 각각 제작 중이며, 중국 교량 건설사들의 조선 공급망 진출이 확산되는 흐름이다.</p>
+      <div class="meta"><a class="src" href="https://splash247.com/gsi-taps-bridge-builder-to-ease-ship-block-bottleneck/" target="_blank" rel="noopener">Splash247</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="ports">
+    <div class="cat-head"><span class="idx">E</span><h2>항만·예인선</h2><span class="cnt">4건</span></div>
+
+    <div class="article" id="art-tugmarket">
+      <h3>美 LNG 터미널 증설·대형선 추세에 예인선 수요 확대</h3>
+      <p>걸프 연안 LNG 터미널 증설과 선박 대형화에 힘입어 미국 예인선 시장이 신조·인수·리파워를 통해 재편 중이다. Moran Towing·Maritime Partners·Master Boat Builders·Shaver Transportation 등이 신조 투자를 이어가는 한편, Jones Act 면제 확대가 업계의 장기 투자 신뢰도를 흔드는 리스크로 지목됐다.</p>
+      <div class="meta"><a class="src" href="https://www.workboat.com/bigger-ships-new-terminals-cargo-trends-drive-tugboat-market" target="_blank" rel="noopener">Workboat</a></div>
+    </div>
+
+    <div class="article" id="art-haisea">
+      <h3>캐나다 LNG 수출 터미널 확장에 예인선 신조 러시 — 메탄올 이중연료 예인선도 투입</h3>
+      <p>시스팬·하이슬라 네이션 합작사 HaiSea Marine이 Sanmar·Damen에 LNG Canada용 예인선을 발주했고, SAAM Towage도 칠레 Asenav에 신조를 주문했다. 코턱 캐나다는 세계 최초 메탄올 이중연료 호위·구조 예인선 SD AISEMAHT를 인도받아 밴쿠버 인근에서 유조선 호위에 투입했다. 쉘 등은 LNG Canada 2단계에 210~230억 달러를 투자해 생산능력을 연 2,800만 톤으로 두 배 확대할 계획이다.</p>
+      <div class="meta"><a class="src" href="https://www.rivieramm.com/news-content-hub/canada-focus-tugboats-ordered-delivered-for-expanded-energy-export-terminals-90243" target="_blank" rel="noopener">Riviera Maritime Media</a></div>
+    </div>
+
+    <div class="article" id="art-nador">
+      <h3>CMA Terminals, 모로코 Nador 컨테이너터미널 지분 49% 인수 완료</h3>
+      <p>CMA CGM 자회사 CMA Terminals가 모로코 Nador West Med항 서부 컨테이너터미널 운영사 NCT 지분 49%를 확보했다(Marsa Maroc 51% 유지). 2027년 가동 예정이며, 안벽 900m·수심 18m·야드 37.5ha 규모로 최종 연간 처리능력은 180만TEU다.</p>
+      <div class="meta"><a class="src" href="https://www.porttechnology.org/news/port-development/cma-terminals-takes-49-per-cent-stake-in-nador-terminal/" target="_blank" rel="noopener">PortTechnology</a></div>
+    </div>
+
+    <div class="article" id="art-eurogate">
+      <h3>유로게이트, 빌헬름스하펜 터미널 자동화에 8,200만 유로 조달</h3>
+      <p>KfW IPEX-Bank가 유로게이트 빌헬름스하펜 컨테이너터미널의 자동화·디지털화 파일럿 사업에 8,200만 유로(약 9,170만 달러)를 대출한다. 무인 터미널트럭(ATT)이 안벽과 자동 적재크레인(ASC) 사이 컨테이너를 운반하는 방식으로, 결과에 따라 함부르크 등 독일 내 전 터미널 확대 여부가 결정된다.</p>
+      <div class="meta"><a class="src" href="https://www.porttechnology.org/news/automation-and-optimisation/eurogate-secures-e82m-for-terminal-automation/" target="_blank" rel="noopener">PortTechnology</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="market">
+    <div class="cat-head"><span class="idx">F</span><h2>운임·유가 시장</h2><span class="cnt">4건</span></div>
+
+    <div class="article" id="art-baltic">
+      <h3>케이프사이즈 약세 지속, 발틱운임지수 3주 연속 하락</h3>
+      <p>발틱운임지수(BDI)가 3주 연속 하락하며 2,511포인트(-1.34%)로 6월 30일 이후 최저치를 기록했다. 케이프사이즈 지수는 3,249포인트(-2.20%)로 4월 초 이후 최저, 주간으로는 25% 급락했다. 케이프사이즈 일일 용선료는 25,961달러(-664달러)로 내렸다.</p>
+      <div class="meta"><span class="tag hl">운임 지표</span><a class="src" href="https://www.bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-index-stays-in-the-doldrums-as-capesize-rates-slide-further" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+    </div>
+
+    <div class="article" id="art-oilsurge">
+      <h3>중동·러시아 공급 불안에 유가 급등, WTI 100달러 재돌파</h3>
+      <p>브렌트유가 전일 대비 3.2%(+$3.41) 오른 $109.34, WTI는 2.8%(+$2.74) 오른 $100.67로 9월 21일 이후 처음 100달러를 넘었다. 호르무즈 해협 인근 공격 증가, 예멘 후티의 아덴 대통령궁 미사일 공격(사망 5명), 우크라이나의 러시아 랴잔 정유소 타격 등이 겹쳤다. 주간 기준 브렌트 +4.1%, WTI +8.6% 상승했다.</p>
+      <div class="meta"><a class="src" href="https://www.bairdmaritime.com/shipping/tankers/oil-prices-surge-as-middle-east-and-russian-supply-jitters-mount" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+    </div>
+
+    <div class="article" id="art-oil110">
+      <h3>브렌트유 장중 110달러 터치, 5월 이후 최고</h3>
+      <p>브렌트유가 장중 배럴당 110달러를 터치하며 5월 이후 최고치를 기록, 2주 연속 주간 상승세를 이어갔다. 뉴욕 디젤 가격은 갤런당 $4.90로 계절 기준 사상 최고 수준을 보였고, 미국은 전략비축유(SPR)에서 최대 1,700만 배럴 방출 방침을 밝혔다.</p>
+      <div class="meta"><span class="src">Bloomberg</span></div>
+    </div>
+
+    <div class="article" id="art-container">
+      <h3>美 컨테이너 수입, 9월 역대 최고치 — 中發 물량이 견인</h3>
+      <p>데카르트시스템즈 집계 기준 9월 미국 컨테이너 수입량이 254만6,261TEU(전년 대비 +10.3%)로 9월 기준 역대 최고를 기록했다. 이 중 중국發 물량이 92만4,454TEU(+21.2%, 전체의 36.3%)로 증가세를 주도했다.</p>
+      <div class="meta"><span class="tag hl">미중 교역</span><a class="src" href="https://www.bairdmaritime.com/shipping/boxships/china-shipment-surge-powers-us-container-imports-to-fresh-monthly-high" target="_blank" rel="noopener">Reuters (Baird Maritime 재게재)</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="altfuel">
+    <div class="cat-head"><span class="idx">G</span><h2>대체연료</h2><span class="cnt">1건</span></div>
+
+    <div class="article" id="art-ethanol">
+      <h3>싱가포르, 5,000톤 규모 세계 최대 에탄올 벙커링 완료</h3>
+      <p>싱가포르항만청(MPA) 지원 아래 Golden Island·PSA싱가포르가 10월 17일 Pasir Panjang 터미널에서 MAERSK HALIFAX에 약 5,000톤의 ISCC 인증 바이오에탄올을 공급했다 — 단일 공급 기준 세계 최대 규모다. 7월 스페인 바르셀로나에서 Repsol이 Antonia Mærsk에 공급한 2,800톤보다 약 79% 많은 물량으로, 컨테이너 하역과 벙커링을 동시 진행(SIMOPS)하며 상업 규모 공급 가능성을 입증했다. 머스크는 미국에서도 자국산 콘에탄올 벙커링을 시작하는 등 다중연료 전략을 이어가고 있다.</p>
+      <div class="meta"><span class="tag hl">연료 전환</span><a class="src" href="https://www.manifoldtimes.com/news/golden-island-completes-worlds-largest-ethanol-bunkering-operation-in-singapore/" target="_blank" rel="noopener">Manifold Times</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="note">본 브리핑은 원문 뉴스레터를 분석해 카테고리별로 재구성·번역한 것입니다. 선박 사진 캡션 등 순수 화보성 항목(10여 건)과 크레인선 LARA 1의 광고성 홍보문은 제외했습니다. 또한 해운·조선업과 직접 관련성이 낮은 기사(美 위스콘신주 예인선 철거소송 1건, 네덜란드 레이우아르던 철교 교체 보류 기사 1건, 네덜란드 구축함 BOUBOULINA 표적함 처분 기사 1건)도 제외했습니다. CMA Terminals의 모로코 Nador 지분 인수 기사와 유로게이트 터미널 자동화 기사는 원문에 동일 내용이 두 차례 중복 게재되어 있어 각각 한 건으로 통합했습니다. 각 기사의 "출처"는 별도 조사를 통해 확인된 원문 기사에 하이퍼링크로 연결했으며, 원본이 표기한 출처와 실제로 확인된 게재처가 다른 경우 실제 링크된 게재처명으로 갱신했습니다. 1건(Bloomberg)은 원문 게재처를 특정하지 못해 출처명만 표기하고 링크는 연결하지 않았습니다. 시장·투자 판단 시 원출처를 직접 확인하시기 바랍니다.</p>
+    <p class="gen">Generated 2026-10-21 · Source file: Google Drive / 284-21-10-2026.pdf</p>
+  </footer>
+
+</main>
+
+<button class="back-to-top" id="backToTop" aria-label="맨 위로 이동" title="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+</button>
+
+<script>
+  (function(){
+    var sunPath = 'M12 4.5V2.5M12 21.5v-2M4.5 12H2.5M21.5 12h-2M6 6 4.6 4.6M19.4 19.4 18 18M18 6l1.4-1.4M4.6 19.4 6 18M12 16.5A4.5 4.5 0 1 0 12 7.5a4.5 4.5 0 0 0 0 9Z';
+    var moonPath = 'M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z';
+    var icon = document.getElementById('themeIcon');
+    var btn = document.getElementById('themeToggle');
+    function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function currentIsDark(){
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark') return true;
+      if (t === 'light') return false;
+      return systemDark();
+    }
+    function paintIcon(){
+      var dark = currentIsDark();
+      icon.innerHTML = '<path d="' + (dark ? moonPath : sunPath) + '"></path>';
+    }
+    btn.addEventListener('click', function(){
+      var next = currentIsDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      paintIcon();
+    });
+    paintIcon();
+  })();
+
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var panel = document.getElementById('menuPanel');
+    function closeMenu(){
+      panel.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu(){
+      panel.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (panel.hidden) openMenu(); else closeMenu();
+    });
+    panel.addEventListener('click', function(e){
+      if (e.target.tagName === 'A') closeMenu();
+    });
+    document.addEventListener('click', function(e){
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) closeMenu();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+
+  (function(){
+    var btn = document.getElementById('backToTop');
+    function update(){
+      if (window.scrollY > 480) btn.classList.add('show');
+      else btn.classList.remove('show');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    update();
+  })();
+</script>
+
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script defer src="../auth-gate.js"></script>
+
+</body>
+</html>
