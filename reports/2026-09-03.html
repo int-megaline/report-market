@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maritime Bulletin 235</title>
+<style>html{visibility:hidden;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth-gate.css">
+<style>
+  :root{
+    --paper:#EEF2F1;
+    --surface:#FFFFFF;
+    --surface-2:#E4EAE8;
+    --ink:#16232C;
+    --ink-soft:#2B3A42;
+    --muted:#5B6D72;
+    --line:#D7DEDC;
+    --line-strong:#BFC9C6;
+    --accent:#1D5C8A;
+    --accent-strong:#0E3A57;
+    --accent-tint:#DCE9F1;
+    --highlight:#B9711F;
+    --highlight-tint:#F3E4D1;
+    --good:#3C7A5A;
+    --shadow:0 1px 2px rgba(14,58,87,0.06), 0 8px 24px rgba(14,58,87,0.06);
+    --radius:14px;
+    --radius-sm:8px;
+    --font-display:'Fraunces', Georgia, 'Noto Serif KR', serif;
+    --font-body:'Public Sans', -apple-system, 'Noto Sans KR', sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, 'Noto Sans Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0B1720;
+      --surface:#101F29;
+      --surface-2:#16262F;
+      --ink:#E9EEF0;
+      --ink-soft:#CBD6D9;
+      --muted:#8EA1A6;
+      --line:#22343D;
+      --line-strong:#2E434D;
+      --accent:#5EA6D8;
+      --accent-strong:#8FC4E8;
+      --accent-tint:#16303F;
+      --highlight:#E0A54C;
+      --highlight-tint:#2E2415;
+      --good:#6FBE94;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0B1720;
+    --surface:#101F29;
+    --surface-2:#16262F;
+    --ink:#E9EEF0;
+    --ink-soft:#CBD6D9;
+    --muted:#8EA1A6;
+    --line:#22343D;
+    --line-strong:#2E434D;
+    --accent:#5EA6D8;
+    --accent-strong:#8FC4E8;
+    --accent-tint:#16303F;
+    --highlight:#E0A54C;
+    --highlight-tint:#2E2415;
+    --good:#6FBE94;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);}
+  ::selection{ background:var(--accent-tint); }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    position:sticky; top:0; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(6px);
+  }
+  .masthead-inner{
+    max-width:960px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .brand{ display:flex; align-items:baseline; gap:8px; flex:none; text-decoration:none; color:inherit; }
+  .brand:hover .word{ color:var(--accent); }
+  .brand:hover{ text-decoration:none; }
+  .brand .word{
+    font-family:var(--font-display); font-weight:600; font-size:17px;
+    letter-spacing:0.01em; white-space:nowrap; transition:color .12s ease;
+  }
+  .brand .issue{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--muted);
+    border-left:1px solid var(--line-strong); padding-left:8px; white-space:nowrap;
+  }
+  .home-link{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft); text-decoration:none;
+  }
+  .home-link:hover{ background:var(--accent); border-color:var(--accent); color:#fff; text-decoration:none; }
+  .home-link svg{ width:16px; height:16px; }
+  nav.jump{ display:flex; gap:0; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; justify-content:flex-start; }
+  nav.jump::-webkit-scrollbar{ display:none; }
+  nav.jump a{
+    font-size:12px; font-weight:600; color:var(--muted); text-decoration:none;
+    padding:7px 8px; border-radius:999px; white-space:nowrap;
+  }
+  nav.jump a:hover{ background:var(--surface-2); color:var(--ink); }
+  .theme-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft);
+  }
+  .theme-toggle svg{ width:16px; height:16px; }
+
+  .masthead-controls{ display:flex; align-items:center; gap:8px; flex:none; }
+  .menu-wrap{ position:relative; flex:none; }
+  .menu-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .menu-toggle svg{ width:16px; height:16px; }
+  .menu-toggle[aria-expanded="true"]{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .menu-panel{
+    position:absolute; top:calc(100% + 8px); right:0; width:248px; z-index:60;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:12px;
+    box-shadow:var(--shadow); padding:8px; display:flex; flex-direction:column; gap:1px;
+    max-height:calc(100vh - 76px); overflow-y:auto;
+  }
+  .menu-panel[hidden]{ display:none; }
+  .menu-group-label{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); padding:8px 10px 4px;
+  }
+  .menu-panel a{
+    font-size:13px; color:var(--ink-soft); text-decoration:none; padding:8px 10px; border-radius:7px;
+  }
+  .menu-panel a:hover{ background:var(--surface-2); color:var(--ink); }
+  .menu-panel a.sub{ font-size:12.5px; color:var(--muted); padding-left:16px; }
+  .menu-divider{ height:1px; background:var(--line); margin:6px 4px; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 36px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--highlight); }
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(32px,5vw,46px);
+    line-height:1.12; margin:0 0 18px; text-wrap:balance; color:var(--accent-strong);
+  }
+  .lede{
+    font-size:16.5px; color:var(--ink-soft); max-width:64ch; margin:0 0 4px;
+  }
+  .lede b{ color:var(--ink); }
+  .source-line{
+    margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--muted);
+  }
+
+  /* ---------- manifest / kpi strip ---------- */
+  .manifest{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; margin:32px 0 8px;
+  }
+  .manifest .cell{ background:var(--surface); padding:18px 18px; }
+  .manifest .cell .num{
+    font-family:var(--font-display); font-weight:600; font-size:28px; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .manifest .cell .lbl{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  @media (max-width:720px){ .manifest{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- top stories ---------- */
+  .top-stories{ margin:40px 0 0; scroll-margin-top:76px; }
+  .top-stories h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .story-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .story-card{
+    display:block; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:16px 16px 14px; text-decoration:none; color:inherit; transition:border-color .15s;
+  }
+  .story-card:hover{ border-color:var(--accent); }
+  .story-card .cat-label{
+    font-family:var(--font-body); font-weight:600; font-size:11px; letter-spacing:0.02em; color:var(--accent);
+    margin-bottom:8px; display:block;
+  }
+  .story-card h3{ font-family:var(--font-display); font-size:15.5px; font-weight:600; margin:0 0 8px; line-height:1.35; color:var(--ink); }
+  .story-card p{ font-size:12.5px; color:var(--muted); margin:0; line-height:1.5; }
+  @media (max-width:820px){ .story-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .story-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- key indicators ---------- */
+  .indicators{ margin:44px 0 0; scroll-margin-top:76px; }
+  .indicators h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .ind-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ind-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; scroll-margin-top:76px;
+  }
+  .ind-card h3{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:0 0 3px; color:var(--ink); }
+  .ind-card .ind-note{ font-size:11.5px; color:var(--muted); margin:0 0 14px; }
+  .ind-row{ display:grid; grid-template-columns:112px 1fr 56px; align-items:center; gap:10px; padding:4px 0; }
+  .ind-row .ilbl{ font-size:12px; color:var(--ink-soft); }
+  .ind-row .itrack{ height:9px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .ind-row .ifill{ height:100%; border-radius:4px; background:var(--accent); }
+  .ind-row .ifill.dim{ background:var(--line-strong); }
+  .ind-row .ival{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); text-align:right; font-variant-numeric:tabular-nums; }
+  .ind-card .ind-src{ margin-top:12px; font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
+  .ind-card .ind-src a{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  .ind-card .ind-src a:hover{ border-bottom-style:solid; }
+  @media (max-width:720px){ .ind-grid{ grid-template-columns:1fr; } .ind-row{ grid-template-columns:96px 1fr 48px; } }
+
+  /* ---------- distribution bar chart ---------- */
+  .chart-block{ margin:44px 0 8px; }
+  .chart-block h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .bar-row{ display:grid; grid-template-columns:150px 1fr 34px; align-items:center; gap:12px; padding:6px 0; }
+  .bar-row .name{ font-size:13.5px; color:var(--ink-soft); }
+  .bar-track{ height:10px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--accent); border-radius:4px; }
+  .bar-row .count{ font-family:var(--font-mono); font-size:12.5px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
+
+  /* ---------- summary ---------- */
+  .summary{ margin:48px 0; padding:24px 26px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .summary h2{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 12px; color:var(--accent-strong); }
+  .summary p{ margin:0 0 12px; color:var(--ink-soft); font-size:15px; }
+  .summary p:last-child{ margin-bottom:0; }
+
+  /* ---------- category sections ---------- */
+  section.cat{ margin:56px 0; scroll-margin-top:76px; }
+  .cat-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; border-bottom:2px solid var(--ink); padding-bottom:12px; }
+  .cat-head .idx{ font-family:var(--font-mono); font-size:13px; color:var(--accent); font-weight:600; }
+  .cat-head h2{ font-family:var(--font-display); font-size:24px; font-weight:600; margin:0; }
+  .cat-head .cnt{ margin-left:auto; font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+  .cat-desc{ font-size:13.5px; color:var(--muted); margin:10px 0 22px; max-width:64ch; }
+
+  .article{ padding:18px 0; border-bottom:1px solid var(--line); }
+  .article:last-child{ border-bottom:none; }
+  .article h3{ font-family:var(--font-display); font-size:17px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .article p{ margin:0 0 10px; font-size:14.5px; color:var(--ink-soft); }
+  .article .meta{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .tag{ font-family:var(--font-mono); font-size:11px; padding:3px 8px; border-radius:5px; border:1px solid var(--line-strong); color:var(--muted); }
+  .tag.hl{ background:var(--highlight-tint); border-color:transparent; color:var(--highlight); font-weight:600; }
+  .src{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); }
+  .src::before{ content:"출처 · "; }
+  a.src{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  a.src:hover{ border-bottom-style:solid; }
+
+  /* ---------- footer ---------- */
+  footer{ margin-top:72px; padding:32px 0 56px; border-top:1px solid var(--line); }
+  footer .note{ font-size:13px; color:var(--muted); max-width:70ch; margin:0 0 10px; }
+  footer .gen{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:18px; }
+
+  @media (max-width:640px){
+    nav.jump{ display:none; }
+    .manifest{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:104px 1fr 28px; }
+  }
+
+  /* ---------- back to top ---------- */
+  .back-to-top{
+    position:fixed; right:20px; bottom:20px; z-index:50;
+    width:42px; height:42px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); color:var(--ink-soft); box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity .15s ease, transform .15s ease, background .12s ease;
+  }
+  .back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
+  .back-to-top:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .back-to-top svg{ width:18px; height:18px; }
+</style>
+</head>
+<body>
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <p class="auth-brand">MEGALINE</p>
+    <p class="auth-sub">Daily Maritime Report 로그인</p>
+    <form id="authForm">
+      <input type="email" id="authEmail" placeholder="이메일" autocomplete="username" required>
+      <input type="password" id="authPassword" placeholder="비밀번호" autocomplete="current-password" required>
+      <button type="submit">로그인</button>
+      <p class="auth-error" id="authError" hidden></p>
+    </form>
+    <a href="#" id="authForgot" class="auth-forgot">비밀번호를 잊으셨나요?</a>
+  </div>
+</div>
+<script>
+  // Optimistic reveal: if this browser was signed in last time, show the page
+  // immediately instead of waiting for Firebase's async session check (that
+  // check still runs via auth-gate.js and will correct this if it was wrong).
+  (function () {
+    try {
+      if (localStorage.getItem("mgDailyReportAuthed") === "1") {
+        var g = document.getElementById("authGate");
+        if (g) g.style.display = "none";
+        document.documentElement.style.visibility = "visible";
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="/" title="MEGALINE Daily Report 허브로 돌아가기">
+      <span class="word">Maritime Bulletin</span>
+      <span class="issue">No.235</span>
+    </a>
+    <nav class="jump">
+      <a href="#liner">컨테이너·정기선</a>
+      <a href="#offshore-wind">오프쇼어 풍력</a>
+      <a href="#shipbuilding">조선·신조</a>
+      <a href="#security">안보·지정학</a>
+      <a href="#safety">안전·인명</a>
+      <a href="#offshore-support">오프쇼어 지원·M&A</a>
+      <a href="#ports-logistics">항만·물류</a>
+    </nav>
+    <div class="masthead-controls">
+      <a class="home-link" href="/" aria-label="전체 리포트 목록으로" title="전체 리포트 목록으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10v9a1 1 0 0 0 1 1H9.5v-6h5v6H17.5a1 1 0 0 0 1-1v-9"></path></svg>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환" title="라이트/다크 전환">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+      <div class="menu-wrap">
+        <button class="menu-toggle" id="menuToggle" aria-haspopup="true" aria-expanded="false" aria-controls="menuPanel" aria-label="차트 바로가기 메뉴" title="차트 바로가기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </button>
+        <div class="menu-panel" id="menuPanel" role="menu" hidden>
+          <div class="menu-group-label">차트 바로가기</div>
+          <a href="#top-stories" role="menuitem">오늘의 주요 기사</a>
+          <a href="#kpi" role="menuitem">브리핑 개요 지표</a>
+          <a href="#dist-chart" role="menuitem">카테고리별 기사 분포</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">카테고리별 상세</div>
+          <a href="#liner" role="menuitem">A · 컨테이너·정기선</a>
+          <a href="#offshore-wind" role="menuitem">B · 오프쇼어 풍력</a>
+          <a href="#shipbuilding" role="menuitem">C · 조선·신조</a>
+          <a href="#security" role="menuitem">D · 안보·지정학</a>
+          <a href="#safety" role="menuitem">E · 안전·인명</a>
+          <a href="#offshore-support" role="menuitem">F · 오프쇼어 지원·M&A</a>
+          <a href="#ports-logistics" role="menuitem">G · 항만·물류</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">핵심 지표</div>
+          <a class="sub" href="#ind-zim" role="menuitem">· ZIM 2분기 vs 상반기 손익</a>
+          <a class="sub" href="#ind-lng-orders" role="menuitem">· LNG선 수주 점유율</a>
+          <a class="sub" href="#ind-yard-utilization" role="menuitem">· 한국 3대 조선사 가동률</a>
+          <a class="sub" href="#ind-strike" role="menuitem">· 로테르담 파업 vs 철도 파업</a>
+          <a class="sub" href="#ind-crew-deaths" role="menuitem">· 선원 사망 원인 비중</a>
+          <a class="sub" href="#ind-marad" role="menuitem">· 미 MARAD Title XI 신청료</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>DAILY BRIEFING · MEGALINE 참고용</div>
+    <h1>2026년 9월 3일<br>해운·조선업계 데일리 브리핑</h1>
+    <p class="lede">Maasmond Maritime <b>Daily Collection of Maritime Press Clippings</b> 235호(45,300+ 구독자 대상 배포)를 바탕으로 그날의 핵심 기사를 정리했습니다. 이번 호는 컨테이너·정기선, 오프쇼어 풍력, 조선·신조, 안보·지정학, 안전·인명, 오프쇼어 지원·M&A, 항만·물류 등 7개 카테고리로 구성됩니다.</p>
+    <div class="source-line">원본 · Google Drive "235-03-09-2026.pdf" (Drive 폴더 1zpoB58gu98WD74_k4kMMKUk0Sd1dSh-P)</div>
+  </section>
+
+  <section class="top-stories" id="top-stories">
+    <h2 class="mini">오늘의 주요 기사</h2>
+    <div class="story-grid">
+      <a class="story-card" href="#art-zim">
+        <span class="cat-label">A · 컨테이너·정기선</span>
+        <h3>ZIM, 2분기 순이익 3배 가까이 급증했지만 상반기는 순손실 전환</h3>
+        <p>2분기 순이익 6,400만$로 반등했으나 상반기 전체로는 2,200만$ 순손실 기록.</p>
+      </a>
+      <a class="story-card" href="#art-piracy">
+        <span class="cat-label">D · 안보·지정학</span>
+        <h3>소말리아 해적 재기승, MV LUTUF 구출 경위 두고 정부·푼틀란드 진실공방</h3>
+        <p>튀르키예 해군 '군사 구출' 주장에 푼틀란드는 '몸값 지급'이라 반박 — 양측 모두 미검증.</p>
+      </a>
+      <a class="story-card" href="#art-lng-orders">
+        <span class="cat-label">C · 조선·신조</span>
+        <h3>중국, 상반기 글로벌 LNG선 발주 57.8% 장악 — 한국 조선업계 위기감</h3>
+        <p>90척 발주 중 중국 52척, 한국 37척 — 1년 전 격차에서 역전 폭 대폭 확대.</p>
+      </a>
+      <a class="story-card" href="#art-rotterdam-strike">
+        <span class="cat-label">G · 항만·물류</span>
+        <h3>로테르담항, 9월 4일 7시간 45분 하역 전면 중단 예고</h3>
+        <p>9일 철도 24시간 파업까지 겹쳐 내륙 운송 차질 우려.</p>
+      </a>
+      <a class="story-card" href="#art-helix-hornbeck">
+        <span class="cat-label">F · 오프쇼어 지원·M&A</span>
+        <h3>Helix-Hornbeck 합병 주주 승인, 9월 1일 종결 예정</h3>
+        <p>합병법인은 'Hornbeck Offshore Services'로 NYSE 상장 유지, 딥워터·재생에너지 통합 서비스 목표.</p>
+      </a>
+      <a class="story-card" href="#art-ca-lawsuit">
+        <span class="cat-label">B · 오프쇼어 풍력</span>
+        <h3>캘리포니아주, 2GW 부유식 해상풍력 프로젝트 취소 두고 트럼프 행정부 제소</h3>
+        <p>임대 취소 대가로 미 석유·가스 자산 투자 유도한 합의를 절차 위반으로 법정 다툼.</p>
+      </a>
+    </div>
+  </section>
+
+  <div class="manifest" id="kpi">
+    <div class="cell"><div class="num">21</div><div class="lbl">분석 기사 수</div></div>
+    <div class="cell"><div class="num">7</div><div class="lbl">분류 카테고리</div></div>
+    <div class="cell"><div class="num">3</div><div class="lbl">출처 미확인 기사</div></div>
+    <div class="cell"><div class="num">4</div><div class="lbl">조선·안보 관련 기사</div></div>
+  </div>
+
+  <div class="chart-block" id="dist-chart">
+    <h2 class="mini">카테고리별 기사 분포</h2>
+    <div class="bar-row"><div class="name">항만·물류</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="count">4</div></div>
+    <div class="bar-row"><div class="name">컨테이너·정기선</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">오프쇼어 풍력</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">조선·신조</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">안보·지정학</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">오프쇼어 지원·M&A</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">안전·인명</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="count">2</div></div>
+  </div>
+
+  <section class="indicators" id="indicators">
+    <h2 class="mini">핵심 지표 한눈에 보기</h2>
+    <div class="ind-grid">
+      <div class="ind-card" id="ind-zim">
+        <h3>ZIM, 2분기 반등에도 상반기 전체는 순손실 전환</h3>
+        <p class="ind-note">2026년 2분기 순이익 대 2026년 상반기 누적 순손익 비교 (단위: 백만$).</p>
+        <div class="ind-row"><div class="ilbl">2026 2Q 순이익</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">+64백만$</div></div>
+        <div class="ind-row"><div class="ilbl">2025 2Q 순이익</div><div class="itrack"><div class="ifill dim" style="width:38%"></div></div><div class="ival">+24백만$</div></div>
+        <div class="ind-row"><div class="ilbl">2026 상반기 누적</div><div class="itrack"><div class="ifill dim" style="width:34%"></div></div><div class="ival">-22백만$</div></div>
+        <div class="ind-row"><div class="ilbl">2025 상반기 누적</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">+320백만$</div></div>
+        <div class="ind-src">출처 · <a href="https://www.prnewswire.com/news-releases/zim-reports-strong-results-for-the-second-quarter-of-2026-benefiting-from-its-leading-transpacific-position-agile-commercial-approach-and-efficient-cost-structure-302855083.html" target="_blank" rel="noopener">ZIM Integrated Shipping Services (보도자료)</a></div>
+      </div>
+      <div class="ind-card" id="ind-lng-orders">
+        <h3>상반기 글로벌 LNG선 수주, 중국이 절반 이상 차지</h3>
+        <p class="ind-note">2026년 상반기 총 90척 발주 기준, 중국·한국 조선사 수주 척수 비교.</p>
+        <div class="ind-row"><div class="ilbl">중국 (2026 상반기)</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">52척 · 57.8%</div></div>
+        <div class="ind-row"><div class="ilbl">한국 (2026 상반기)</div><div class="itrack"><div class="ifill dim" style="width:71%"></div></div><div class="ival">37척 · 41.1%</div></div>
+        <div class="ind-row"><div class="ilbl">중국 (2025 상반기)</div><div class="itrack"><div class="ifill dim" style="width:29%"></div></div><div class="ival">15척</div></div>
+        <div class="ind-row"><div class="ilbl">한국 (2025 상반기)</div><div class="itrack"><div class="ifill dim" style="width:25%"></div></div><div class="ival">13척</div></div>
+        <div class="ind-src">출처 · <a href="https://www.imarinenews.com/38497.html" target="_blank" rel="noopener">iMarine</a></div>
+      </div>
+      <div class="ind-card" id="ind-yard-utilization">
+        <h3>한국 3대 조선사, 상반기 가동률 모두 100% 상회</h3>
+        <p class="ind-note">2026년 상반기 평균 가동률(설비 대비 실제 조업시간 비율) 기준.</p>
+        <div class="ind-row"><div class="ilbl">HD KSOE</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">106.1%</div></div>
+        <div class="ind-row"><div class="ilbl">삼성중공업</div><div class="itrack"><div class="ifill dim" style="width:94%"></div></div><div class="ival">100.2%</div></div>
+        <div class="ind-row"><div class="ilbl">한화오션</div><div class="itrack"><div class="ifill dim" style="width:94%"></div></div><div class="ival">100.0%</div></div>
+        <div class="ind-src">출처 · Imarine</div>
+      </div>
+      <div class="ind-card" id="ind-strike">
+        <h3>로테르담 항만 파업, 닷새 뒤 전국 철도 파업으로 이어져</h3>
+        <p class="ind-note">9월 4일 항만 하역 중단 시간과 9월 9일 철도 파업 시간 비교.</p>
+        <div class="ind-row"><div class="ilbl">철도 파업 (9/9~10)</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">24시간</div></div>
+        <div class="ind-row"><div class="ilbl">항만 하역 중단 (9/4)</div><div class="itrack"><div class="ifill dim" style="width:32%"></div></div><div class="ival">7시간45분</div></div>
+        <div class="ind-src">출처 · CNV / Contargo</div>
+      </div>
+      <div class="ind-card" id="ind-crew-deaths">
+        <h3>선원 사망, 5건 중 4건은 사고 아닌 질병</h3>
+        <p class="ind-note">Britannia P&I Club, 약 3,000건의 선원 관련 클레임 분석 기준.</p>
+        <div class="ind-row"><div class="ilbl">질병으로 인한 사망</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">81%</div></div>
+        <div class="ind-row"><div class="ilbl">사고로 인한 사망</div><div class="itrack"><div class="ifill dim" style="width:23%"></div></div><div class="ival">19%</div></div>
+        <div class="ind-row"><div class="ilbl">그중 심혈관 질환</div><div class="itrack"><div class="ifill dim" style="width:72%"></div></div><div class="ival">58%</div></div>
+        <div class="ind-src">출처 · <a href="https://www.shipmanagementinternational.com/news/psgbltsk3hj4ebl-zpzj4-nfb7c-237em-ttnbh-5yyxf-cmj9f-262jl-e74am-9xf6s-536k4-czadh-n4zdf-pccg8-n29ez-w23e3-b3ztt-spcln-p8ng8-2h7kk-znpml-zyne5" target="_blank" rel="noopener">Ship Management International (Britannia P&I Club)</a></div>
+      </div>
+      <div class="ind-card" id="ind-marad">
+        <h3>미 MARAD, 조선금융 프로그램 신청 수수료 80% 인하</h3>
+        <p class="ind-note">Title XI 선박·조선소 금융 프로그램 신청료, 개정 전후 비교(단위: $).</p>
+        <div class="ind-row"><div class="ilbl">개정 전</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">5,000$</div></div>
+        <div class="ind-row"><div class="ilbl">개정 후 (8/28~)</div><div class="itrack"><div class="ifill" style="width:20%"></div></div><div class="ival">1,000$</div></div>
+        <div class="ind-src">출처 · <a href="https://www.workboat.com/shipbuilding/new-marad-rule-to-revise-title-xi-shipbuilding-finance" target="_blank" rel="noopener">WorkBoat</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="summary">
+    <h2>오늘의 핵심 흐름</h2>
+    <p>이번 호를 관통하는 첫 번째 흐름은 '숫자는 좋아 보이지만 방향은 엇갈린다'는 역설입니다. ZIM은 2분기 순이익이 전년 동기 대비 3배 가까이 뛰며 시장을 놀라게 했지만, 상반기 누적으로는 2,200만$ 순손실로 돌아섰습니다 — 운임 상승과 물동량 회복이 2분기에 집중되면서 상반기 전체의 부진을 가리는 착시가 발생한 셈입니다. 비슷한 맥락에서 한국 3대 조선사는 가동률이 일제히 100%를 넘겼지만, 이는 수주 호황의 결과라기보다 오히려 '더 이상 받을 수 없는' 포화 상태를 뜻합니다 — 실제로는 중국이 상반기 LNG선 발주의 57.8%를 가져가며 한국의 전통적 강세 영역까지 잠식하고 있어, 외형적 호황과 경쟁력 잠식이 동시에 진행되는 모습입니다.</p>
+    <p>두 번째 흐름은 안보·리스크 관리의 재부상입니다. 소말리아 해역에서는 MV LUTUF호 구출을 둘러싸고 튀르키예·소말리아 연방정부의 '군사 작전' 주장과 푼틀란드 정부의 '몸값 지급' 주장이 정면으로 충돌했습니다 — 두 설명 모두 독립적으로 검증되지 않은 채 언론에 보도됐다는 점 자체가, 2011년 정점 이후 잠잠했던 해적 문제가 다시 국제사회의 감시망 밖에서 자라났음을 보여줍니다. Höegh Autoliners가 38척 선대에 5년간 GPS 재밍·스푸핑 방지 시스템을 도입하기로 한 것도 같은 흐름 위에 있습니다 — 항로 위협이 물리적 위협(해적)과 전자적 위협(GPS 교란) 양쪽에서 동시에 커지고 있다는 업계의 인식을 반영합니다.</p>
+    <p>세 번째 흐름은 공급망 마찰의 누적입니다. 로테르담항은 9월 4일 약 8시간 하역을 전면 중단하고, 닷새 뒤에는 전국 철도가 24시간 멈춥니다 — 개별 파업의 지속 시간은 짧지만 항만과 철도가 연이어 겹치면 내륙 운송까지 파급되는 구조입니다. 여기에 Maersk가 4분기 연료할증료(FFF)를 낮추기로 한 것은 단기적으로는 화주에게 우호적인 신호지만, 유가 지수 연동형 요금 체계 자체가 언제든 다시 오를 수 있다는 변동성을 내포하고 있다는 점도 함께 봐야 합니다.</p>
+    <p>마지막으로 에너지 전환 관련 투자는 정치적 변수와 함께 여전히 진행형입니다. 미국에서는 캘리포니아주가 연방정부의 해상풍력 리스 취소 합의를 상대로 소송을 제기하며 정책 불확실성을 드러낸 반면, 독일에서는 913MW급 Borkum Riffgrund 3가 상업운전을 시작하고 Deltamarin은 130m급 대형 모노파일을 다룰 수 있는 세계 최대급 잭업 설치선 'VITRUVIAN Class' 설계에 착수하는 등 유럽에서는 오히려 다음 세대 터빈에 맞춘 설비 투자가 가속화되고 있습니다 — 같은 산업 안에서도 지역별 정책 방향이 뚜렷하게 갈리는 한 해가 되고 있습니다.</p>
+  </div>
+
+  <section class="cat" id="liner">
+    <div class="cat-head"><span class="idx">A</span><h2>컨테이너·정기선</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-zim">
+      <h3>ZIM, 2분기 순이익 급증했지만 상반기는 순손실 전환</h3>
+      <p>이스라엘 컨테이너선사 ZIM(세계 10위, 116척·약 70만2천TEU)이 2026년 2분기 순이익 6,400만$(전년 동기 2,400만$)를 기록하며 희석 EPS 0.53$를 달성했다. 그러나 상반기 누적으로는 운임 하락(TEU당 1,455$, 전년 1,632$)과 물동량 감소로 2,200만$ <b>순손실</b>을 냈다 — 전년 상반기 3억2천만$ 흑자에서 반전된 수치다. 발주 잔량은 23척·약 18만1,836TEU.</p>
+      <div class="meta"><span class="tag hl">실적</span><a class="src" href="https://www.prnewswire.com/news-releases/zim-reports-strong-results-for-the-second-quarter-of-2026-benefiting-from-its-leading-transpacific-position-agile-commercial-approach-and-efficient-cost-structure-302855083.html" target="_blank" rel="noopener">ZIM Integrated Shipping Services (보도자료)</a></div>
+    </div>
+
+    <div class="article">
+      <h3>CMA CGM-CCCC, 신흥시장 항만·물류 파트너십 MOU 체결</h3>
+      <p>프랑스 CMA CGM과 중국 CCCC가 항만 인프라, 복합물류, 디지털·에너지전환 분야 협력을 위한 MOU를 체결했다. CCCC의 엔지니어링·건설 역량과 CMA CGM의 정기선망·터미널 운영·CEVA Logistics 물류망을 결합해 아프리카·동남아·중동·중남미 시장을 겨냥한다. CCCC 자회사 ZPMC는 2004년부터 CMA CGM 터미널에 하역장비를 공급해왔다.</p>
+      <div class="meta"><a class="src" href="https://www.seatrade-maritime.com/ports-logistics/cma-cgm-and-china-communications-construction-forge-emerging-markets-partnership" target="_blank" rel="noopener">Seatrade Maritime News</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Maersk, 10월 1일부터 장기계약 연료할증료 인하</h3>
+      <p>A.P. Moller-Maersk가 유가 하락을 반영해 10월부터 주요 항로의 화석연료할증료(FFF)를 낮춘다. 극동아시아→북유럽 40피트 컨테이너 기준 570$(기존 595$)로, 일부 유럽-중남미 항로도 함께 인하된다. 같은 시기 다수 지역의 터미널 취급료도 조정된다.</p>
+      <div class="meta"><a class="src" href="https://www.maersk.com/news/articles/2026/09/01/fossil-fuel-fee-fff" target="_blank" rel="noopener">Maersk</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="offshore-wind">
+    <div class="cat-head"><span class="idx">B</span><h2>오프쇼어 풍력</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-ca-lawsuit">
+      <h3>캘리포니아주, 해상풍력 프로젝트 취소 두고 연방정부 제소</h3>
+      <p>캘리포니아주 법무장관과 에너지위원회가 2GW급 부유식 해상풍력 프로젝트(Morro Bay 해역, Golden State Wind)의 리스 취소 합의를 두고 미 내무부와 사업자를 상대로 연방법원에 소송을 제기했다. 내무부는 사업자가 리스료 약 1억2천만$를 미 석유·가스·LNG 자산에 재투자하는 조건으로 리스를 자진 반납하도록 합의했는데, 주 정부는 이 절차가 해저광구법(OCSLA)을 위반했다고 주장한다.</p>
+      <div class="meta"><span class="tag hl">정책·소송</span><a class="src" href="https://www.offshore-mag.com/renewable-energy/news/55401963/california-sues-trump-administration-and-golden-state-wind-over-canceled-project" target="_blank" rel="noopener">Offshore Magazine (Reuters)</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Ørsted, 913MW급 Borkum Riffgrund 3 상업운전 개시</h3>
+      <p>Ørsted와 Nuveen Infrastructure가 공동 소유한 독일 북해 Borkum Riffgrund 3(913MW, 해안에서 72km)가 상업운전에 들어갔다. Ørsted의 독일 내 6번째 가동 해상풍력단지로, 2025년 초 가동한 Gode Wind 3(253MW)에 이은 확장이다.</p>
+      <div class="meta"><a class="src" href="https://www.offshore-mag.com/renewable-energy/news/55402333/rsted-rwe-and-pge-projects-hit-key-offshore-wind-milestones" target="_blank" rel="noopener">Offshore Magazine</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Deltamarin-Offshoretronic, 세계 최대급 잭업 설치선 'VITRUVIAN Class' 설계 착수</h3>
+      <p>핀란드 Deltamarin과 스페인 Offshoretronic이 2030년 상용화될 20~30MW급 터빈용 대형 모노파일(길이 최대 130m, 중량 최대 5,000톤)을 설치할 수 있는 잭업 설치선 'VITRUVIAN Class'(전장 179m·전폭 75m) 설계에 착수했다. 현재 세계 선단이 다룰 수 있는 한계는 약 3,000~3,500톤으로, 차세대 터빈 설치에는 새로운 급의 선박이 필요하다는 판단이다.</p>
+      <div class="meta"><a class="src" href="https://www.oedigital.com/news/542618-deltamarin-offshoretronic-to-design-monopile-installation-vessel" target="_blank" rel="noopener">Offshore Engineer (OE Digital)</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="shipbuilding">
+    <div class="cat-head"><span class="idx">C</span><h2>조선·신조</h2><span class="cnt">3건</span></div>
+
+    <div class="article">
+      <h3>한국 3대 조선사, 가동률 100% 돌파에도 증설 투자 지속</h3>
+      <p>HD KSOE·삼성중공업·한화오션의 2026년 상반기 평균 가동률이 각각 106.1%, 100.2%, 100%로 설비 한계를 넘어섰다. 수주 잔량을 소화하기 위해 한화오션은 대형 플로팅도크·해상크레인 도입에, 삼성중공업은 자동화 파이프 제작센터 'Pipe Robo-Fab'에, HD KSOE는 크레인 교체 등 설비 현대화에 각각 수천억원대 투자를 이어가고 있다.</p>
+      <div class="meta"><span class="src">Imarine</span></div>
+    </div>
+
+    <div class="article" id="art-lng-orders">
+      <h3>중국, 상반기 글로벌 LNG선 발주 57.8% 장악</h3>
+      <p>미 조선분석기관 Besson Nautical에 따르면 2026년 상반기 전 세계 LNG선 발주 90척 중 중국이 52척(57.8%), 한국이 37척(41.1%)을 확보했다. 1년 전 같은 기간(중국 15척·한국 13척)과 비교하면 격차가 크게 벌어진 수치로, 현재 가동 중인 LNG선의 70% 이상을 건조한 한국 조선업계에 위기감이 확산되고 있다.</p>
+      <div class="meta"><span class="tag hl">수주 경쟁</span><a class="src" href="https://www.imarinenews.com/38497.html" target="_blank" rel="noopener">iMarine</a></div>
+    </div>
+
+    <div class="article">
+      <h3>DP World, 첫 메탄올 이중연료 컨테이너선 명명</h3>
+      <p>DP World 산하 Shipping Solutions가 첫 메탄올 이중연료 1,250TEU 컨테이너선 'DP WORLD LONDON'을 명명했다. 중국에서 건조돼 2026년 4월 인도됐으며, 지난 6월 로테르담에서 Unibarge·Methanex 협력으로 첫 메탄올 벙커링을 완료했다.</p>
+      <div class="meta"><a class="src" href="https://mediaoffice.ae/en/news/2026/august/31-08/dp-worlds-shipping-solutions-names-its-first-methanol-dual-fuel-vessel" target="_blank" rel="noopener">DP World Media Office</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="security">
+    <div class="cat-head"><span class="idx">D</span><h2>안보·지정학</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-piracy">
+      <h3>소말리아 해적 재기승, MV LUTUF 구출 경위 두고 진실공방</h3>
+      <p>소말리아 연방정부는 8월 29일 튀르키예 해군과 소말리아군이 10일간 추적 끝에 화물선 MV LUTUF를 구출하고 해적 14명을 사살했다고 발표했으나, 푼틀란드 보안부는 군사 구출이 아니라 <b>몸값 지급</b>으로 풀려났다고 반박했다 — 양측 주장 모두 독립적으로 검증되지 않았다. 올해 들어 아덴만·소말리아 해역에서 최소 15건의 공격이 확인됐으며, 2011년 정점 대비로는 낮은 수준이지만 봄 이후 뚜렷한 증가세다.</p>
+      <div class="meta"><span class="tag hl">속보</span><a class="src" href="https://www.aljazeera.com/news/2026/8/31/why-is-piracy-picking-up-off-somalias-coast-again" target="_blank" rel="noopener">Al Jazeera</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Höegh Autoliners, 38척 선단에 5년간 GPS 재밍 방지 시스템 도입</h3>
+      <p>노르웨이 카캐리어선사 Höegh Autoliners가 자국 기술기업 SGM Technology와 5년 계약을 맺고 'PntGuard' 항법 복원력 시스템을 38척 선단에 순차 도입한다. GPS·GNSS 신호가 재밍·스푸핑당해도 독립적으로 인증된 위치정보를 제공하는 기술로, 9월부터 기존 선대 설치가 시작된다.</p>
+      <div class="meta"><a class="src" href="https://www.hoeghautoliners.com/news/hoegh-autoliners-to-equip-entire-fleet-with-new-navigation-resilience-technology" target="_blank" rel="noopener">Höegh Autoliners</a></div>
+    </div>
+
+    <div class="article">
+      <h3>튀르키예 2번함 TCG IZMIR, 확장형 VLS 탑재하고 해상시험 돌입</h3>
+      <p>튀르키예 아나돌루조선소가 건조 중인 I급(Istif급) 2번 프리깃 TCG IZMIR(F-516)가 8월 10일 첫 해상수락시험(SAT)에 나섰다. 1번함 TCG ISTANBUL 대비 수직발사시스템(VLS)이 더 크고 깊은 스트라이크급 형상으로 확장돼, SİPER 요격미사일 등 대형 무장 탑재 가능성이 제기된다. 국산화율은 80%를 넘는다.</p>
+      <div class="meta"><a class="src" href="https://www.navalnews.com/naval-news/2026/08/turkiye-second-iclass-frigate-tcg-izmir-sea-trials-vls/" target="_blank" rel="noopener">Naval News</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="safety">
+    <div class="cat-head"><span class="idx">E</span><h2>안전·인명</h2><span class="cnt">2건</span></div>
+
+    <div class="article">
+      <h3>Inmarsat, GMDSS 조난·기상 데이터 결합한 해상안전 데이터허브 출시</h3>
+      <p>Inmarsat Maritime이 3년치 GMDSS 조난신호와 2025년 한 해 10만6,975건의 해상안전방송을 결합 분석한 'Maritime Safety Data Hub'를 출시했다. 긴급 메시지의 84.6%가 기상 관련이었고 이 중 75%가 폭풍이었다. 선종별로는 탱커(203건)가 조난신호 최다, 벌크선(105건)이 뒤를 이었다.</p>
+      <div class="meta"><a class="src" href="https://gcaptain.com/new-inmarsat-maritime-safety-data-hub-insights-combine-gmdss-distress-and-weather-data-to-provide-unique-insight-into-maritime-risk/" target="_blank" rel="noopener">gCaptain</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Britannia P&I, 선원 사망 5건 중 4건은 질병 — 심혈관 질환이 최다</h3>
+      <p>Britannia P&I Club이 약 3,000건의 선원 관련 클레임을 분석한 결과 선원 사망의 81%가 질병, 19%가 사고로 인한 것이었으며, 질병 사망의 58%는 심혈관 질환이었다. 젊은 선원층의 자살·실종 등 정신건강 문제도 우려 요인으로 지목됐다.</p>
+      <div class="meta"><a class="src" href="https://www.shipmanagementinternational.com/news/psgbltsk3hj4ebl-zpzj4-nfb7c-237em-ttnbh-5yyxf-cmj9f-262jl-e74am-9xf6s-536k4-czadh-n4zdf-pccg8-n29ez-w23e3-b3ztt-spcln-p8ng8-2h7kk-znpml-zyne5" target="_blank" rel="noopener">Ship Management International</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="offshore-support">
+    <div class="cat-head"><span class="idx">F</span><h2>오프쇼어 지원·M&A</h2><span class="cnt">3건</span></div>
+
+    <div class="article">
+      <h3>SCA, 케이블 캐러셀 임대 시장 진출</h3>
+      <p>Subsea Cable Assets(SCA)가 4,000톤·6,000톤급 케이블 캐러셀 임대 서비스를 새로 출시하며 유럽 고객사와 첫 임대 계약을 체결했다. 소유 부담 없이 프로젝트별로 캐러셀 용량을 이용할 수 있게 해, 해상풍력·인터커넥터·해저 프로젝트 수요에 대응한다.</p>
+      <div class="meta"><a class="src" href="https://oceannews.com/news/subsea-cable/subsea-cable-assets-launches-carousel-rental-service-with-4000-and-6000-ton-systems/" target="_blank" rel="noopener">Ocean News & Technology</a></div>
+    </div>
+
+    <div class="article" id="art-helix-hornbeck">
+      <h3>Helix-Hornbeck 합병, 주주 승인 통과 — 9월 1일 종결 예정</h3>
+      <p>Helix Energy Solutions와 Hornbeck Offshore Services의 전량 주식교환 방식 합병이 8월 31일 주주총회에서 승인됐다. 합병법인은 'Hornbeck Offshore Services'로 NYSE(HOS)에 상장되며, Hornbeck 측이 지분 약 55%, Helix 측이 약 45%를 보유한다. 딥워터 개입·서브씨 로보틱스와 특수 지원선단을 결합해 3년 내 연 7,500만$ 이상의 시너지를 목표로 한다.</p>
+      <div class="meta"><span class="tag hl">M&A</span><a class="src" href="https://www.workboat.com/helix-shareholders-approve-hornbeck-merger" target="_blank" rel="noopener">WorkBoat</a></div>
+    </div>
+
+    <div class="article">
+      <h3>중국 Wison, Shell과 FLNG 액화기술 라이선스 협력</h3>
+      <p>중국 오프쇼어 업체 Wison New Energies가 Shell Catalysts & Technologies와 협력해, 그동안 Shell 지분 참여 프로젝트에만 쓰이던 DMR(Dual Mixed Refrigerant) 액화기술을 부유식 LNG(FLNG) 시장 전반에 제공하기로 했다. Wison은 콩고공화국 Eni의 Nguya FLNG 설비를 건조해 지난 2월 첫 LNG 화물을 생산한 바 있다.</p>
+      <div class="meta"><span class="src">Portnews</span></div>
+    </div>
+  </section>
+
+  <section class="cat" id="ports-logistics">
+    <div class="cat-head"><span class="idx">G</span><h2>항만·물류</h2><span class="cnt">4건</span></div>
+
+    <div class="article" id="art-rotterdam-strike">
+      <h3>로테르담항, 9월 4일 약 8시간 하역 전면 중단 — 닷새 뒤 철도 파업까지</h3>
+      <p>네덜란드 항만노조가 9월 4일 11시15분~19시 로테르담(암스테르담·제일란트 포함) 항만 하역을 전면 중단한다. 선적·양하·화물고박·예선·검사가 모두 멈추며, 독일 내륙운송사 Contargo는 실제 차질이 10시30분~20시까지 확대될 것으로 예상했다. 9월 9일에는 전국 철도 24시간 파업이 예정돼 있어 내륙 운송 차질이 이어질 전망이다.</p>
+      <div class="meta"><span class="tag hl">물류 차질</span><span class="src">CNV / Contargo</span></div>
+    </div>
+
+    <div class="article">
+      <h3>미 MARAD, 조선·선박 금융 프로그램 신청료 80% 인하</h3>
+      <p>미 해사청(MARAD)이 Title XI 선박·조선소 금융 프로그램의 신청 수수료를 5,000$에서 1,000$로 80% 인하하는 잠정 최종규칙을 8월 28일부로 시행했다. 기존 34개 조항 중 14개를 삭제하는 등 1978년 이후 사실상 처음으로 규정을 전면 개정했으며, 해당 프로그램은 최대 사업비의 87.5%까지 최장 25년간 미 정부 보증 대출을 지원한다.</p>
+      <div class="meta"><a class="src" href="https://www.workboat.com/shipbuilding/new-marad-rule-to-revise-title-xi-shipbuilding-finance" target="_blank" rel="noopener">WorkBoat</a></div>
+    </div>
+
+    <div class="article">
+      <h3>Titan-Sogestran, 서부 지중해용 6,000㎥급 LNG 벙커선 파트너십</h3>
+      <p>Molgas Group 산하 Titan Clean Fuels가 프랑스 Sogestran Group과 손잡고 서부 지중해(마르세유·바르셀로나·제노바 등)용 6,000㎥급 LNG·LBM 벙커선을 신조·용선·운영하기로 했다. 흘수가 낮아 폰툰 없이도 크루즈선에 벙커링이 가능한 설계이며, 중국 CIMC SOE 조선소에서 건조된다.</p>
+      <div class="meta"><a class="src" href="https://www.offshore-energy.biz/titan-sogestran-pact-brings-new-6000-cbm-lng-bunker-vessel-to-western-mediterranean/" target="_blank" rel="noopener">Offshore Energy (Navingo)</a></div>
+    </div>
+
+    <div class="article">
+      <h3>MOL, 6개 선박관리 자회사를 싱가포르 단일 법인으로 통합</h3>
+      <p>일본 미쓰이상선(MOL)이 6개 그룹 선박관리사를 싱가포르 소재 'MOL Global Ship Management'(MOLGSM)로 통합 완료했다고 밝혔다. 200척 이상을 총괄 관리하며, AI·데이터 분석 기반의 안전기준 표준화와 대체연료 선박 도입 대응을 목표로 한다.</p>
+      <div class="meta"><a class="src" href="https://www.mol.co.jp/en/pr/2026/26043.html" target="_blank" rel="noopener">Mitsui O.S.K. Lines (보도자료)</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="note">본 브리핑은 원문 뉴스레터를 분석해 카테고리별로 재구성·번역한 것입니다. 선박 사진 캡션 등 순수 화보성 항목과 해운·조선업과 직접 관련성이 낮은 기사(네덜란드 준설박물관 개방 행사 안내, KNRM의 라우베르스메이르 소형 모터크루저 예인 구조 사례 등 2건)는 제외했습니다. 각 기사의 "출처"는 별도 조사를 통해 확인된 원문 기사에 하이퍼링크로 연결했으며, 원본이 표기한 출처와 실제로 확인된 게재처가 다른 경우 실제 링크된 게재처명으로 갱신했습니다. 3건(Imarine, Portnews, CNV / Contargo)은 원문 게재처를 특정하지 못해 출처명만 표기하고 링크는 연결하지 않았습니다. 시장·투자 판단 시 원출처를 직접 확인하시기 바랍니다.</p>
+    <p class="gen">Generated 2026-09-03 · Source file: Google Drive / 235-03-09-2026.pdf</p>
+  </footer>
+
+</main>
+
+<button class="back-to-top" id="backToTop" aria-label="맨 위로 이동" title="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+</button>
+
+<script>
+  (function(){
+    var sunPath = 'M12 4.5V2.5M12 21.5v-2M4.5 12H2.5M21.5 12h-2M6 6 4.6 4.6M19.4 19.4 18 18M18 6l1.4-1.4M4.6 19.4 6 18M12 16.5A4.5 4.5 0 1 0 12 7.5a4.5 4.5 0 0 0 0 9Z';
+    var moonPath = 'M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z';
+    var icon = document.getElementById('themeIcon');
+    var btn = document.getElementById('themeToggle');
+    function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function currentIsDark(){
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark') return true;
+      if (t === 'light') return false;
+      return systemDark();
+    }
+    function paintIcon(){
+      var dark = currentIsDark();
+      icon.innerHTML = '<path d="' + (dark ? moonPath : sunPath) + '"></path>';
+    }
+    btn.addEventListener('click', function(){
+      var next = currentIsDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      paintIcon();
+    });
+    paintIcon();
+  })();
+
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var panel = document.getElementById('menuPanel');
+    function closeMenu(){
+      panel.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu(){
+      panel.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (panel.hidden) openMenu(); else closeMenu();
+    });
+    panel.addEventListener('click', function(e){
+      if (e.target.tagName === 'A') closeMenu();
+    });
+    document.addEventListener('click', function(e){
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) closeMenu();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+
+  (function(){
+    var btn = document.getElementById('backToTop');
+    function update(){
+      if (window.scrollY > 480) btn.classList.add('show');
+      else btn.classList.remove('show');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    update();
+  })();
+</script>
+
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script defer src="/auth-gate.js"></script>
+
+</body>
+</html>

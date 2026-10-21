@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEGALINE Daily Maritime Report Hub</title>
+<style>html{visibility:hidden;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth-gate.css">
+<style>
+  :root{
+    --paper:#EEF2F1;
+    --surface:#FFFFFF;
+    --surface-2:#E4EAE8;
+    --ink:#16232C;
+    --ink-soft:#2B3A42;
+    --muted:#5B6D72;
+    --line:#D7DEDC;
+    --line-strong:#BFC9C6;
+    --accent:#1D5C8A;
+    --accent-strong:#0E3A57;
+    --accent-tint:#DCE9F1;
+    --highlight:#B9711F;
+    --highlight-tint:#F3E4D1;
+    --good:#3C7A5A;
+    --shadow:0 1px 2px rgba(14,58,87,0.06), 0 8px 24px rgba(14,58,87,0.06);
+    --radius:14px;
+    --radius-sm:8px;
+    --font-display:'Fraunces', Georgia, 'Noto Serif KR', serif;
+    --font-body:'Public Sans', -apple-system, 'Noto Sans KR', sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, 'Noto Sans Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0B1720;
+      --surface:#101F29;
+      --surface-2:#16262F;
+      --ink:#E9EEF0;
+      --ink-soft:#CBD6D9;
+      --muted:#8EA1A6;
+      --line:#22343D;
+      --line-strong:#2E434D;
+      --accent:#5EA6D8;
+      --accent-strong:#8FC4E8;
+      --accent-tint:#16303F;
+      --highlight:#E0A54C;
+      --highlight-tint:#2E2415;
+      --good:#6FBE94;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0B1720;
+    --surface:#101F29;
+    --surface-2:#16262F;
+    --ink:#E9EEF0;
+    --ink-soft:#CBD6D9;
+    --muted:#8EA1A6;
+    --line:#22343D;
+    --line-strong:#2E434D;
+    --accent:#5EA6D8;
+    --accent-strong:#8FC4E8;
+    --accent-tint:#16303F;
+    --highlight:#E0A54C;
+    --highlight-tint:#2E2415;
+    --good:#6FBE94;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ::selection{ background:var(--accent-tint); }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    position:sticky; top:0; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(6px);
+  }
+  .masthead-inner{
+    max-width:960px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .brand{ display:flex; align-items:baseline; gap:8px; flex:none; }
+  .brand .word{
+    font-family:var(--font-display); font-weight:600; font-size:18px;
+    letter-spacing:0.01em; white-space:nowrap; color:var(--ink);
+  }
+  .brand .sub{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--muted);
+    border-left:1px solid var(--line-strong); padding-left:8px; white-space:nowrap;
+  }
+  .theme-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft);
+  }
+  .theme-toggle svg{ width:16px; height:16px; }
+  .masthead-controls{ display:flex; align-items:center; gap:8px; flex:none; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:52px 0 32px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--highlight); }
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(30px,4.5vw,42px);
+    line-height:1.15; margin:0 0 16px; color:var(--accent-strong);
+  }
+  .lede{ font-size:16px; color:var(--ink-soft); max-width:68ch; margin:0; }
+
+  /* ---------- featured latest report ---------- */
+  .featured-section{ margin:28px 0 48px; }
+  .sec-title{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--muted); margin:0 0 14px; font-weight:600; display:flex; align-items:center; gap:8px;
+  }
+  .sec-title::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .featured-card{
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--radius);
+    padding:28px; box-shadow:var(--shadow); transition:transform 0.15s ease, border-color 0.15s ease;
+    position:relative;
+  }
+  .featured-card:hover{ border-color:var(--accent); }
+  .badge-latest{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:11px; font-weight:600;
+    background:var(--highlight-tint); color:var(--highlight); padding:4px 10px; border-radius:999px;
+    margin-bottom:14px;
+  }
+  .badge-latest::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--highlight); }
+  .featured-card h2{
+    font-family:var(--font-display); font-size:24px; font-weight:600; margin:0 0 12px; line-height:1.3;
+  }
+  .featured-card h2 a{ color:var(--ink); text-decoration:none; }
+  .featured-card h2 a:hover{ color:var(--accent); }
+
+  .card-meta{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; pt-12px; border-top:1px solid var(--line); }
+  .meta-tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tag{ font-family:var(--font-body); font-size:12px; font-weight:500; padding:3px 8px; border-radius:5px; border:1px solid var(--line-strong); color:var(--muted); }
+  .btn-read{
+    display:inline-flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:13.5px; font-weight:600;
+    color:var(--surface); background:var(--accent); padding:8px 16px; border-radius:var(--radius-sm); text-decoration:none;
+  }
+  .btn-read:hover{ background:var(--accent-strong); text-decoration:none; }
+
+  /* ---------- report list ---------- */
+  .report-grid{ display:flex; flex-direction:column; gap:14px; margin-bottom:60px; }
+  .report-item{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+    transition:background 0.12s ease, border-color 0.12s ease;
+  }
+  .report-item:hover{ background:var(--surface-2); border-color:var(--line-strong); }
+  .report-info{ flex:1; min-width:0; }
+  .report-date{ font-family:var(--font-mono); font-size:12px; color:var(--accent); font-weight:600; margin-bottom:6px; }
+  .report-title{
+    font-family:var(--font-display); font-size:17px; font-weight:600; color:var(--ink); margin:0;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .report-action{ flex:none; }
+  .btn-sm{
+    font-family:var(--font-body); font-size:12.5px; font-weight:600; color:var(--ink-soft);
+    border:1px solid var(--line-strong); padding:6px 12px; border-radius:6px; background:var(--surface);
+  }
+  .report-item:hover .btn-sm{ background:var(--accent); color:var(--surface); border-color:var(--accent); text-decoration:none; }
+
+  /* ---------- footer ---------- */
+  footer{ margin-top:60px; padding:32px 0 56px; border-top:1px solid var(--line); }
+  footer .note{ font-size:13px; color:var(--muted); margin:0 0 8px; }
+  footer .gen{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); }
+
+  @media (max-width:640px){
+    .report-item{ flex-direction:column; align-items:stretch; gap:10px; }
+    .report-info{ width:100%; }
+    .report-title{ -webkit-line-clamp:3; }
+    .report-action{ align-self:flex-end; }
+    .featured-card{ padding:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <p class="auth-brand">MEGALINE</p>
+    <p class="auth-sub">Daily Maritime Report 로그인</p>
+    <form id="authForm">
+      <input type="email" id="authEmail" placeholder="이메일" autocomplete="username" required>
+      <input type="password" id="authPassword" placeholder="비밀번호" autocomplete="current-password" required>
+      <button type="submit">로그인</button>
+      <p class="auth-error" id="authError" hidden></p>
+    </form>
+    <a href="#" id="authForgot" class="auth-forgot">비밀번호를 잊으셨나요?</a>
+  </div>
+</div>
+<script>
+  // Optimistic reveal: if this browser was signed in last time, show the page
+  // immediately instead of waiting for Firebase's async session check (that
+  // check still runs via auth-gate.js and will correct this if it was wrong).
+  (function () {
+    try {
+      if (localStorage.getItem("mgDailyReportAuthed") === "1") {
+        var g = document.getElementById("authGate");
+        if (g) g.style.display = "none";
+        document.documentElement.style.visibility = "visible";
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span class="word">MEGALINE</span>
+      <span class="sub">Daily Maritime Report</span>
+    </div>
+    <div class="masthead-controls">
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환" title="라이트/다크 전환">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>MEGALINE MARKET INTELLIGENCE</div>
+    <h1>일간 해운·조선 시장 분석 리포트</h1>
+    <p class="lede">글로벌 해운·조선·오프쇼어 시장의 최신 동향과 중량물 운송 관점의 핵심 정보 분석을 매일 업데이트하여 제공합니다.</p>
+  </section>
+
+  <!-- 최신 리포트 영역 (동적 로드) -->
+  <section class="featured-section">
+    <div class="sec-title">Latest Report</div>
+    <div id="latest-report-container">
+      <!-- 자바스크립트가 최신 기사를 여기에 출력합니다 -->
+    </div>
+  </section>
+
+  <!-- 리포트 아카이브 영역 (동적 로드) -->
+  <section class="archive-section">
+    <div class="sec-title">Report Archives</div>
+    <div id="report-grid" class="report-grid">
+      <!-- 자바스크립트가 전체 기사 목록을 여기에 출력합니다 -->
+    </div>
+  </section>
+
+  <footer>
+    <p class="note">본 보고서는 MEGALINE 임직원 및 관계자 참고용으로 제작된 시장 분석 자료입니다.</p>
+    <p class="gen">&copy; 2026 MEGALINE Co., Ltd. All rights reserved.</p>
+  </footer>
+
+</main>
+
+<script>
+  // 테마 토글 스크립트
+  (function(){
+    var sunPath = 'M12 4.5V2.5M12 21.5v-2M4.5 12H2.5M21.5 12h-2M6 6 4.6 4.6M19.4 19.4 18 18M18 6l1.4-1.4M4.6 19.4 6 18M12 16.5A4.5 4.5 0 1 0 12 7.5a4.5 4.5 0 0 0 0 9Z';
+    var moonPath = 'M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z';
+    var icon = document.getElementById('themeIcon');
+    var btn = document.getElementById('themeToggle');
+    function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function currentIsDark(){
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark') return true;
+      if (t === 'light') return false;
+      return systemDark();
+    }
+    function paintIcon(){
+      var dark = currentIsDark();
+      icon.innerHTML = '<path d="' + (dark ? moonPath : sunPath) + '"></path>';
+    }
+    btn.addEventListener('click', function(){
+      var next = currentIsDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      paintIcon();
+    });
+    paintIcon();
+  })();
+
+  // JSON 기사 자동 로드 스크립트
+  fetch('./reports.json')
+    .then(response => response.json())
+    .then(data => {
+      if (!data || data.length === 0) return;
+
+      // 1. 최신 기사 (JSON 맨 첫 번째 항목) Top Card 출력
+      const latest = data[0];
+      const tagsHtml = (latest.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
+      
+      document.getElementById('latest-report-container').innerHTML = `
+        <article class="featured-card">
+          <span class="badge-latest">LATEST ISSUE · ${latest.date} · ${latest.issue}</span>
+          <h2><a href="${latest.url}">${latest.desc}</a></h2>
+          <div class="card-meta">
+            <div class="meta-tags">${tagsHtml}</div>
+            <a href="${latest.url}" class="btn-read">리포트 읽기 &rarr;</a>
+          </div>
+        </article>
+      `;
+
+      // 2. 전체 기사 아카이브 목록 출력 (날짜/호수 뱃지 아래 실제 헤드라인을 바로 노출)
+      const grid = document.getElementById('report-grid');
+      grid.innerHTML = data.map(item => `
+        <div class="report-item">
+          <div class="report-info">
+            <div class="report-date">${item.date} · Issue ${item.issue}</div>
+            <h3 class="report-title"><a href="${item.url}">${item.summary || item.desc}</a></h3>
+          </div>
+          <div class="report-action">
+            <a href="${item.url}" class="btn-sm">보기</a>
+          </div>
+        </div>
+      `).join('');
+    })
+    .catch(err => {
+      console.error('리포트 데이터를 불러오는 중 오류 발생:', err);
+    });
+</script>
+
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script defer src="/auth-gate.js"></script>
+
+</body>
+</html>

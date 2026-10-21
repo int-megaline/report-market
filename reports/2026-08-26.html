@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maritime Bulletin 227</title>
+<style>html{visibility:hidden;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/auth-gate.css">
+<style>
+  :root{
+    --paper:#EEF2F1;
+    --surface:#FFFFFF;
+    --surface-2:#E4EAE8;
+    --ink:#16232C;
+    --ink-soft:#2B3A42;
+    --muted:#5B6D72;
+    --line:#D7DEDC;
+    --line-strong:#BFC9C6;
+    --accent:#1D5C8A;
+    --accent-strong:#0E3A57;
+    --accent-tint:#DCE9F1;
+    --highlight:#B9711F;
+    --highlight-tint:#F3E4D1;
+    --good:#3C7A5A;
+    --shadow:0 1px 2px rgba(14,58,87,0.06), 0 8px 24px rgba(14,58,87,0.06);
+    --radius:14px;
+    --radius-sm:8px;
+    --font-display:'Fraunces', Georgia, 'Noto Serif KR', serif;
+    --font-body:'Public Sans', -apple-system, 'Noto Sans KR', sans-serif;
+    --font-mono:'JetBrains Mono', ui-monospace, 'Noto Sans Mono', monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0B1720;
+      --surface:#101F29;
+      --surface-2:#16262F;
+      --ink:#E9EEF0;
+      --ink-soft:#CBD6D9;
+      --muted:#8EA1A6;
+      --line:#22343D;
+      --line-strong:#2E434D;
+      --accent:#5EA6D8;
+      --accent-strong:#8FC4E8;
+      --accent-tint:#16303F;
+      --highlight:#E0A54C;
+      --highlight-tint:#2E2415;
+      --good:#6FBE94;
+      --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0B1720;
+    --surface:#101F29;
+    --surface-2:#16262F;
+    --ink:#E9EEF0;
+    --ink-soft:#CBD6D9;
+    --muted:#8EA1A6;
+    --line:#22343D;
+    --line-strong:#2E434D;
+    --accent:#5EA6D8;
+    --accent-strong:#8FC4E8;
+    --accent-tint:#16303F;
+    --highlight:#E0A54C;
+    --highlight-tint:#2E2415;
+    --good:#6FBE94;
+    --shadow:0 1px 2px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);}
+  ::selection{ background:var(--accent-tint); }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- masthead ---------- */
+  header.masthead{
+    position:sticky; top:0; z-index:40;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(6px);
+  }
+  .masthead-inner{
+    max-width:960px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .brand{ display:flex; align-items:baseline; gap:8px; flex:none; text-decoration:none; color:inherit; }
+  .brand:hover .word{ color:var(--accent); }
+  .brand:hover{ text-decoration:none; }
+  .brand .word{
+    font-family:var(--font-display); font-weight:600; font-size:17px;
+    letter-spacing:0.01em; white-space:nowrap; transition:color .12s ease;
+  }
+  .brand .issue{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--muted);
+    border-left:1px solid var(--line-strong); padding-left:8px; white-space:nowrap;
+  }
+  .home-link{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft); text-decoration:none;
+  }
+  .home-link:hover{ background:var(--accent); border-color:var(--accent); color:#fff; text-decoration:none; }
+  .home-link svg{ width:16px; height:16px; }
+  nav.jump{ display:flex; gap:0; overflow-x:auto; scrollbar-width:none; flex:1 1 auto; min-width:0; justify-content:flex-start; }
+  nav.jump::-webkit-scrollbar{ display:none; }
+  nav.jump a{
+    font-size:12px; font-weight:600; color:var(--muted); text-decoration:none;
+    padding:7px 8px; border-radius:999px; white-space:nowrap;
+  }
+  nav.jump a:hover{ background:var(--surface-2); color:var(--ink); }
+  .theme-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex:none; color:var(--ink-soft);
+  }
+  .theme-toggle svg{ width:16px; height:16px; }
+
+  .masthead-controls{ display:flex; align-items:center; gap:8px; flex:none; }
+  .menu-wrap{ position:relative; flex:none; }
+  .menu-toggle{
+    width:34px; height:34px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .menu-toggle svg{ width:16px; height:16px; }
+  .menu-toggle[aria-expanded="true"]{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .menu-panel{
+    position:absolute; top:calc(100% + 8px); right:0; width:248px; z-index:60;
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:12px;
+    box-shadow:var(--shadow); padding:8px; display:flex; flex-direction:column; gap:1px;
+    max-height:calc(100vh - 76px); overflow-y:auto;
+  }
+  .menu-panel[hidden]{ display:none; }
+  .menu-group-label{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); padding:8px 10px 4px;
+  }
+  .menu-panel a{
+    font-size:13px; color:var(--ink-soft); text-decoration:none; padding:8px 10px; border-radius:7px;
+  }
+  .menu-panel a:hover{ background:var(--surface-2); color:var(--ink); }
+  .menu-panel a.sub{ font-size:12.5px; color:var(--muted); padding-left:16px; }
+  .menu-divider{ height:1px; background:var(--line); margin:6px 4px; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:56px 0 36px; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--highlight); }
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(32px,5vw,46px);
+    line-height:1.12; margin:0 0 18px; text-wrap:balance; color:var(--accent-strong);
+  }
+  .lede{
+    font-size:16.5px; color:var(--ink-soft); max-width:64ch; margin:0 0 4px;
+  }
+  .lede b{ color:var(--ink); }
+  .source-line{
+    margin-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--muted);
+  }
+
+  /* ---------- manifest / kpi strip ---------- */
+  .manifest{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; margin:32px 0 8px;
+  }
+  .manifest .cell{ background:var(--surface); padding:18px 18px; }
+  .manifest .cell .num{
+    font-family:var(--font-display); font-weight:600; font-size:28px; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .manifest .cell .lbl{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  @media (max-width:720px){ .manifest{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------- top stories ---------- */
+  .top-stories{ margin:40px 0 0; scroll-margin-top:76px; }
+  .top-stories h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .story-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .story-card{
+    display:block; background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:16px 16px 14px; text-decoration:none; color:inherit; transition:border-color .15s;
+  }
+  .story-card:hover{ border-color:var(--accent); }
+  .story-card .cat-label{
+    font-family:var(--font-body); font-weight:600; font-size:11px; letter-spacing:0.02em; color:var(--accent);
+    margin-bottom:8px; display:block;
+  }
+  .story-card h3{ font-family:var(--font-display); font-size:15.5px; font-weight:600; margin:0 0 8px; line-height:1.35; color:var(--ink); }
+  .story-card p{ font-size:12.5px; color:var(--muted); margin:0; line-height:1.5; }
+  @media (max-width:820px){ .story-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .story-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- key indicators ---------- */
+  .indicators{ margin:44px 0 0; scroll-margin-top:76px; }
+  .indicators h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .ind-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ind-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; scroll-margin-top:76px;
+  }
+  .ind-card h3{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:0 0 3px; color:var(--ink); }
+  .ind-card .ind-note{ font-size:11.5px; color:var(--muted); margin:0 0 14px; }
+  .ind-row{ display:grid; grid-template-columns:112px 1fr 56px; align-items:center; gap:10px; padding:4px 0; }
+  .ind-row .ilbl{ font-size:12px; color:var(--ink-soft); }
+  .ind-row .itrack{ height:9px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .ind-row .ifill{ height:100%; border-radius:4px; background:var(--accent); }
+  .ind-row .ifill.dim{ background:var(--line-strong); }
+  .ind-row .ival{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); text-align:right; font-variant-numeric:tabular-nums; }
+  .ind-card .ind-src{ margin-top:12px; font-family:var(--font-mono); font-size:10.5px; color:var(--muted); }
+  .ind-card .ind-src a{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  .ind-card .ind-src a:hover{ border-bottom-style:solid; }
+  @media (max-width:720px){ .ind-grid{ grid-template-columns:1fr; } .ind-row{ grid-template-columns:96px 1fr 48px; } }
+
+  /* ---------- distribution bar chart ---------- */
+  .chart-block{ margin:44px 0 8px; }
+  .chart-block h2.mini{
+    font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--muted); margin:0 0 16px; font-weight:600;
+  }
+  .bar-row{ display:grid; grid-template-columns:150px 1fr 34px; align-items:center; gap:12px; padding:6px 0; }
+  .bar-row .name{ font-size:13.5px; color:var(--ink-soft); }
+  .bar-track{ height:10px; background:var(--surface-2); border-radius:4px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--accent); border-radius:4px; }
+  .bar-row .count{ font-family:var(--font-mono); font-size:12.5px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
+
+  /* ---------- summary ---------- */
+  .summary{ margin:48px 0; padding:24px 26px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .summary h2{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0 0 12px; color:var(--accent-strong); }
+  .summary p{ margin:0 0 12px; color:var(--ink-soft); font-size:15px; }
+  .summary p:last-child{ margin-bottom:0; }
+
+  /* ---------- category sections ---------- */
+  section.cat{ margin:56px 0; scroll-margin-top:76px; }
+  .cat-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; border-bottom:2px solid var(--ink); padding-bottom:12px; }
+  .cat-head .idx{ font-family:var(--font-mono); font-size:13px; color:var(--accent); font-weight:600; }
+  .cat-head h2{ font-family:var(--font-display); font-size:24px; font-weight:600; margin:0; }
+  .cat-head .cnt{ margin-left:auto; font-family:var(--font-mono); font-size:12.5px; color:var(--muted); }
+  .cat-desc{ font-size:13.5px; color:var(--muted); margin:10px 0 22px; max-width:64ch; }
+
+  .article{ padding:18px 0; border-bottom:1px solid var(--line); }
+  .article:last-child{ border-bottom:none; }
+  .article h3{ font-family:var(--font-display); font-size:17px; font-weight:600; margin:0 0 8px; line-height:1.4; }
+  .article p{ margin:0 0 10px; font-size:14.5px; color:var(--ink-soft); }
+  .article .meta{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .tag{ font-family:var(--font-mono); font-size:11px; padding:3px 8px; border-radius:5px; border:1px solid var(--line-strong); color:var(--muted); }
+  .tag.hl{ background:var(--highlight-tint); border-color:transparent; color:var(--highlight); font-weight:600; }
+  .src{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); }
+  .src::before{ content:"출처 · "; }
+  a.src{ color:var(--accent); text-decoration:none; border-bottom:1px dotted var(--accent); }
+  a.src:hover{ border-bottom-style:solid; }
+
+  /* ---------- footer ---------- */
+  footer{ margin-top:72px; padding:32px 0 56px; border-top:1px solid var(--line); }
+  footer .note{ font-size:13px; color:var(--muted); max-width:70ch; margin:0 0 10px; }
+  footer .gen{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:18px; }
+
+  @media (max-width:640px){
+    nav.jump{ display:none; }
+    .manifest{ grid-template-columns:repeat(2,1fr); }
+    .bar-row{ grid-template-columns:104px 1fr 28px; }
+  }
+
+  /* ---------- back to top ---------- */
+  .back-to-top{
+    position:fixed; right:20px; bottom:20px; z-index:50;
+    width:42px; height:42px; border-radius:999px; border:1px solid var(--line-strong);
+    background:var(--surface); color:var(--ink-soft); box-shadow:var(--shadow);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    opacity:0; visibility:hidden; transform:translateY(8px);
+    transition:opacity .15s ease, transform .15s ease, background .12s ease;
+  }
+  .back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
+  .back-to-top:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .back-to-top svg{ width:18px; height:18px; }
+</style>
+</head>
+<body>
+
+<div id="authGate" class="auth-gate">
+  <div class="auth-card">
+    <p class="auth-brand">MEGALINE</p>
+    <p class="auth-sub">Daily Maritime Report 로그인</p>
+    <form id="authForm">
+      <input type="email" id="authEmail" placeholder="이메일" autocomplete="username" required>
+      <input type="password" id="authPassword" placeholder="비밀번호" autocomplete="current-password" required>
+      <button type="submit">로그인</button>
+      <p class="auth-error" id="authError" hidden></p>
+    </form>
+    <a href="#" id="authForgot" class="auth-forgot">비밀번호를 잊으셨나요?</a>
+  </div>
+</div>
+<script>
+  // Optimistic reveal: if this browser was signed in last time, show the page
+  // immediately instead of waiting for Firebase's async session check (that
+  // check still runs via auth-gate.js and will correct this if it was wrong).
+  (function () {
+    try {
+      if (localStorage.getItem("mgDailyReportAuthed") === "1") {
+        var g = document.getElementById("authGate");
+        if (g) g.style.display = "none";
+        document.documentElement.style.visibility = "visible";
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="/" title="MEGALINE Daily Report 허브로 돌아가기">
+      <span class="word">Maritime Bulletin</span>
+      <span class="issue">No.227</span>
+    </a>
+    <nav class="jump">
+      <a href="#heavy">중량물·오프쇼어</a>
+      <a href="#newbuild">조선·신조</a>
+      <a href="#container">컨테이너선</a>
+      <a href="#routes">항로·운하·항만</a>
+      <a href="#geo">지정학·안보</a>
+      <a href="#safety">안전·사고</a>
+    </nav>
+    <div class="masthead-controls">
+      <a class="home-link" href="/" aria-label="전체 리포트 목록으로" title="전체 리포트 목록으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 10v9a1 1 0 0 0 1 1H9.5v-6h5v6H17.5a1 1 0 0 0 1-1v-9"></path></svg>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환" title="라이트/다크 전환">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+      <div class="menu-wrap">
+        <button class="menu-toggle" id="menuToggle" aria-haspopup="true" aria-expanded="false" aria-controls="menuPanel" aria-label="차트 바로가기 메뉴" title="차트 바로가기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        </button>
+        <div class="menu-panel" id="menuPanel" role="menu" hidden>
+          <div class="menu-group-label">차트 바로가기</div>
+          <a href="#top-stories" role="menuitem">오늘의 주요 기사</a>
+          <a href="#kpi" role="menuitem">브리핑 개요 지표</a>
+          <a href="#dist-chart" role="menuitem">카테고리별 기사 분포</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">카테고리별 상세</div>
+          <a href="#heavy" role="menuitem">A · 중량물·오프쇼어</a>
+          <a href="#newbuild" role="menuitem">B · 조선·신조</a>
+          <a href="#container" role="menuitem">C · 컨테이너선</a>
+          <a href="#routes" role="menuitem">D · 항로·운하·항만</a>
+          <a href="#geo" role="menuitem">E · 지정학·안보</a>
+          <a href="#safety" role="menuitem">F · 안전·사고</a>
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">핵심 지표</div>
+          <a class="sub" href="#ind-china-share" role="menuitem">· 中 조선소 발주 점유율</a>
+          <a class="sub" href="#ind-sector-yoy" role="menuitem">· 선종별 발주 증감률</a>
+          <a class="sub" href="#ind-hengli-share" role="menuitem">· Hengli 컨테이너선 점유율</a>
+          <a class="sub" href="#ind-rhine-kaub" role="menuitem">· 라인강 카우프 수위</a>
+          <a class="sub" href="#ind-hormuz-transit" role="menuitem">· 호르무즈 통항 척수</a>
+          <a class="sub" href="#ind-khorfakkan" role="menuitem">· 코르파칸항 처리능력 확장</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>DAILY BRIEFING · MEGALINE 참고용</div>
+    <h1>2026년 8월 26일자<br>해운·조선업계 데일리 브리핑</h1>
+    <p class="lede">Maasmond Maritime이 발행하는 <b>Daily Collection of Maritime Press Clippings 제227호</b>(2026-08-26, 45,300+ 구독자 대상 배포)를 분석해 중량물·오프쇼어, 조선·신조, 컨테이너선, 항로·운하·항만, 지정학·안보, 안전·사고 6개 영역으로 재구성한 브리핑입니다. McDermott의 ADNOC 중동 최대급 해상 EPCI 수주, 이스라엘 선사의 대중국 PCTC 발주 전환, 호르무즈·남중국해발 지정학 리스크가 이번 호의 축입니다. 중량물·오프쇼어 섹션은 Megaline 사업과의 연관성을 우선 검토했습니다.</p>
+    <div class="source-line">원본 · Google Drive "227-26-08-2026.pdf" (Drive 폴더 1zpoB58gu98WD74_k4kMMKUk0Sd1dSh-P)</div>
+  </section>
+
+  <section class="top-stories" id="top-stories">
+    <h2 class="mini">오늘의 주요 기사</h2>
+    <div class="story-grid">
+      <a class="story-card" href="#art-mcdermott">
+        <span class="cat-label">A · 중량물·오프쇼어 · HTV 연관</span>
+        <h3>ADNOC, 움 샤이프 해상설비에 McDermott '메가 계약' 발주</h3>
+        <p>중동 최대급 해상 모듈, 칭다오 합작조선소서 건조</p>
+      </a>
+      <a class="story-card" href="#art-pioneeringspirit">
+        <span class="cat-label">A · 중량물·오프쇼어</span>
+        <h3>세계 최대 중량물선, 북해 플랫폼 셰틀랜드로 운송</h3>
+        <p>42년 가동한 North Cormorant 플랫폼 해체 착수</p>
+      </a>
+      <a class="story-card" href="#art-raycarcarriers">
+        <span class="cat-label">B · 조선·신조 · 국내 조선 영향</span>
+        <h3>Ray Car Carriers, 10억 달러 PCTC 발주처 한국→중국 전환</h3>
+        <p>8,600CEU급 시리즈, 광저우조선과 계약 추진</p>
+      </a>
+      <a class="story-card" href="#art-hormuz-blockade">
+        <span class="cat-label">E · 지정학·안보</span>
+        <h3>이란계 선박, 美 봉쇄 뚫고 입항...호르무즈 통항 이틀새 17척</h3>
+        <p>美 대이란 고강도 제재 'D-Day' 발표 직후 발생</p>
+      </a>
+      <a class="story-card" href="#art-mischiefreef">
+        <span class="cat-label">E · 지정학·안보</span>
+        <h3>미스치프 암초에 중국 선박 200척 이상 집결</h3>
+        <p>세컨드 토마스 숄 통제권 확대 포석 우려</p>
+      </a>
+      <a class="story-card" href="#art-panama">
+        <span class="cat-label">D · 항로·운하·항만</span>
+        <h3>파나마 운하 112주년...엘니뇨發 흘수 제한 48피트로</h3>
+        <p>2035 비전플랜에 에너지 회랑·환적터미널 포함</p>
+      </a>
+    </div>
+  </section>
+
+  <div class="manifest" id="kpi">
+    <div class="cell"><div class="num">22</div><div class="lbl">분석 기사 수</div></div>
+    <div class="cell"><div class="num">6</div><div class="lbl">분류 카테고리</div></div>
+    <div class="cell"><div class="num">5</div><div class="lbl">중량물·오프쇼어 관련</div></div>
+    <div class="cell"><div class="num">3</div><div class="lbl">지정학 리스크 관련</div></div>
+  </div>
+
+  <div class="chart-block" id="dist-chart">
+    <h2 class="mini">카테고리별 기사 분포</h2>
+    <div class="bar-row"><div class="name">조선·신조</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="count">6</div></div>
+    <div class="bar-row"><div class="name">중량물·오프쇼어</div><div class="bar-track"><div class="bar-fill" style="width:83%"></div></div><div class="count">5</div></div>
+    <div class="bar-row"><div class="name">항로·운하·항만</div><div class="bar-track"><div class="bar-fill" style="width:67%"></div></div><div class="count">4</div></div>
+    <div class="bar-row"><div class="name">컨테이너선</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">지정학·안보</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="count">3</div></div>
+    <div class="bar-row"><div class="name">안전·사고</div><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><div class="count">1</div></div>
+  </div>
+
+  <section class="indicators" id="indicators">
+    <h2 class="mini">핵심 지표 한눈에 보기</h2>
+    <div class="ind-grid">
+      <div class="ind-card" id="ind-china-share">
+        <h3>7월 전 세계 신조 발주, 중국이 81% 싹쓸이</h3>
+        <p class="ind-note">Bank of America 8월 조선 데이터 기준, 국가별 발주 비중.</p>
+        <div class="ind-row"><div class="ilbl">중국 조선소</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">81%</div></div>
+        <div class="ind-row"><div class="ilbl">기타 전세계</div><div class="itrack"><div class="ifill dim" style="width:23%"></div></div><div class="ival">19%</div></div>
+        <div class="ind-src">출처 · <a href="https://id.investing.com/news/stock-market-news/hengli-raih-posisi-teratas-dalam-pesanan-kapal-kontainer-global-93CH-3054161" target="_blank" rel="noopener">Investing.com</a></div>
+      </div>
+      <div class="ind-card" id="ind-sector-yoy">
+        <h3>탱커 발주 강세 지속, 벌커는 급감</h3>
+        <p class="ind-note">2026년 7월 신조 발주, 전년 동월 대비 증감률(선종별).</p>
+        <div class="ind-row"><div class="ilbl">탱커</div><div class="itrack"><div class="ifill" style="width:83%"></div></div><div class="ival">+25%</div></div>
+        <div class="ind-row"><div class="ilbl">대형 컨테이너선(8천TEU+)</div><div class="itrack"><div class="ifill" style="width:10%"></div></div><div class="ival">+3%</div></div>
+        <div class="ind-row"><div class="ilbl">벌커</div><div class="itrack"><div class="ifill dim" style="width:100%"></div></div><div class="ival">-30%</div></div>
+        <div class="ind-src">출처 · <a href="https://id.investing.com/news/stock-market-news/hengli-raih-posisi-teratas-dalam-pesanan-kapal-kontainer-global-93CH-3054161" target="_blank" rel="noopener">Investing.com</a></div>
+      </div>
+      <div class="ind-card" id="ind-hengli-share">
+        <h3>Hengli, 반년 만에 컨테이너선 발주 점유율 5.7%→7.9%</h3>
+        <p class="ind-note">2026년 연초 대비 7월 기준 Hengli의 전세계 컨테이너선 신조 발주 점유율.</p>
+        <div class="ind-row"><div class="ilbl">2026년 연초</div><div class="itrack"><div class="ifill dim" style="width:72%"></div></div><div class="ival">5.7%</div></div>
+        <div class="ind-row"><div class="ilbl">2026년 7월</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">7.9%</div></div>
+        <div class="ind-src">출처 · <a href="https://id.investing.com/news/stock-market-news/hengli-raih-posisi-teratas-dalam-pesanan-kapal-kontainer-global-93CH-3054161" target="_blank" rel="noopener">Investing.com</a></div>
+      </div>
+      <div class="ind-card" id="ind-rhine-kaub">
+        <h3>라인강 카우프 게이지, 8일 만에 6cm→56cm 반등</h3>
+        <p class="ind-note">라인강 선적 기준점(Kaub) 수위, 2026년 8월.</p>
+        <div class="ind-row"><div class="ilbl">8/17</div><div class="itrack"><div class="ifill dim" style="width:11%"></div></div><div class="ival">6cm</div></div>
+        <div class="ind-row"><div class="ilbl">8/23</div><div class="itrack"><div class="ifill dim" style="width:75%"></div></div><div class="ival">42cm</div></div>
+        <div class="ind-row"><div class="ilbl">8/24</div><div class="itrack"><div class="ifill" style="width:100%"></div></div><div class="ival">56cm</div></div>
+        <div class="ind-src">출처 · portnews</div>
+      </div>
+      <div class="ind-card" id="ind-hormuz-transit">
+        <h3>호르무즈 해협 통항, 하루 만에 3분의 1 이하로 급감</h3>
+        <p class="ind-note">美 해군 봉쇄·이란 해협 폐쇄 국면, Kpler 예비 집계 기준.</p>
+        <div class="ind-row"><div class="ilbl">8/23(토)</div><div class="itrack"><div class="ifill dim" style="width:100%"></div></div><div class="ival">13척</div></div>
+        <div class="ind-row"><div class="ilbl">8/24(일)</div><div class="itrack"><div class="ifill" style="width:31%"></div></div><div class="ival">4척</div></div>
+        <div class="ind-src">출처 · <a href="https://wanaen.com/iranian-linked-container-ship-breaches-us-blockade-on-d-day/" target="_blank" rel="noopener">WANA News Agency</a></div>
+      </div>
+      <div class="ind-card" id="ind-khorfakkan">
+        <h3>코르파칸항, 350만→500만 TEU 확장...장기 1,000만 TEU 목표</h3>
+        <p class="ind-note">UAE 코르파칸 컨테이너터미널 처리능력, 확장 전·현재·장기 목표.</p>
+        <div class="ind-row"><div class="ilbl">확장 전</div><div class="itrack"><div class="ifill dim" style="width:35%"></div></div><div class="ival">350만 TEU</div></div>
+        <div class="ind-row"><div class="ilbl">현재</div><div class="itrack"><div class="ifill" style="width:50%"></div></div><div class="ival">500만 TEU</div></div>
+        <div class="ind-row"><div class="ilbl">장기 목표</div><div class="itrack"><div class="ifill dim" style="width:100%"></div></div><div class="ival">1,000만+ TEU</div></div>
+        <div class="ind-src">출처 · <a href="https://www.worldcargonews.com/news/2026/08/gulftainer-targets-10m-teu-at-khorfakkan/" target="_blank" rel="noopener">World Cargo News</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="summary">
+    <h2>오늘의 핵심 흐름</h2>
+    <p>227호를 관통하는 흐름은 <b>중량물·오프쇼어 시장의 대형화</b>다. ADNOC이 McDermott에 발주한 움 샤이프 EPCI는 중동 지역 사상 최대급 해상 모듈 설치로 이어질 전망이고, 세계 최대 중량물선 PIONEERING SPIRIT은 42년 가동한 노스 코머런트 플랫폼을 셰틀랜드로 옮겨 북해 해체 산업의 새로운 사이클을 예고했다. 여기에 MacGregor의 LCO₂ 이송 시스템·부유식 인원 이송 인증까지 더해지며, 오프쇼어 밸류체인 전반이 신규 발주와 설비 고도화 양쪽에서 동시에 움직이고 있다.</p>
+    <p>조선 시장에서는 <b>중국의 고부가가치 선종 잠식</b>이 뚜렷하다. Hengli가 7월 컨테이너선 발주 점유율을 5.7%에서 7.9%로 끌어올려 1위에 올랐고, 중국 조선소 전체가 7월 발주의 81%를 가져갔다. 여기에 그동안 한국 조선소를 주로 이용해온 이스라엘 Ray Car Carriers가 10억 달러 규모 PCTC 시리즈를 광저우조선에 발주할 것으로 알려지며, 자동차운반선처럼 한국이 강세를 보여온 선종에서도 발주처 이동 조짐이 감지된다. 탱커 발주가 전년 대비 25% 늘어난 반면 벌커는 30% 줄어드는 등 선종별 명암도 엇갈렸다.</p>
+    <p>지정학 리스크는 <b>호르무즈와 남중국해 양쪽에서 동시에 고조</b>됐다. 미국의 대이란 고강도 제재 'D-Day' 발표 직후 제재 대상 이란계 선박이 봉쇄망을 뚫고 입항했고, 호르무즈 해협 통항 선박은 이틀 새 17척으로 급감했다. 같은 시기 남중국해 미스치프 암초에는 중국 선박이 5월 40척 미만에서 7월 228척으로 늘었다는 분석이 나와, 세컨드 토마스 숄을 둘러싼 긴장이 재점화될 가능성이 제기된다. 콩스버그가 다크선박 추적 위성을 6기로 늘리기로 한 것도 이런 감시 수요 증가와 맞닿아 있다.</p>
+    <p>항로·항만에서는 회복과 확장이 교차했다. 라인강 카우프 수위가 8일 만에 6cm에서 56cm로 반등하며 저수위 위기가 다소 누그러졌지만 정상 운항 수위에는 여전히 못 미치고, Hapag-Lloyd는 별도로 중부유럽행 체선 할증료를 신설했다. 반대로 파나마 운하는 112주년을 맞아 2035 비전플랜을 발표했으나 엘니뇨로 흘수 제한을 다시 강화했고, UAE 코르파칸항은 장기 1,000만 TEU를 목표로 증설에 나서는 등 물동량 증가에 대비한 항만 투자는 오히려 속도를 내는 모습이다.</p>
+  </div>
+
+  <section class="cat" id="heavy">
+    <div class="cat-head"><span class="idx">A</span><h2>중량물·오프쇼어</h2><span class="cnt">5건</span></div>
+
+    <div class="article" id="art-mcdermott">
+      <h3>ADNOC, 움 샤이프 해상 증압설비에 McDermott '메가 계약' 발주</h3>
+      <p>ADNOC이 움 샤이프(Umm Shaif) 가스전 통합개발사업 4단계 패키지로 McDermott에 10억 달러 이상 규모 EPCI(설계·조달·건조·설치) 메가 계약을 발주했다. 칭다오 합작조선소(QMW)에서 건조될 재킷·상부구조물은 완공 시 <b>중동 지역 최대 하중급 해상 모듈</b>이 될 전망이다.</p>
+      <div class="meta"><span class="tag hl">HTV 연관</span><a class="src" href="https://www.offshore-energy.biz/mcdermott-clinches-over-1-billion-epci-job-for-adnocs-6-2b-giant-gas-project/" target="_blank" rel="noopener">Offshore Energy</a></div>
+    </div>
+
+    <div class="article" id="art-pioneeringspirit">
+      <h3>세계 최대 중량물선 PIONEERING SPIRIT, 셰틀랜드에 North Cormorant 플랫폼 인도</h3>
+      <p>Allseas의 초대형 중량물 운반선 PIONEERING SPIRIT(길이 382m·폭 124m, 5,000톤급 크레인)이 북해 노스 코머런트 플랫폼 상부구조물을 스코틀랜드 셰틀랜드 러윅항으로 운송했다. 42년간 가동된 이 플랫폼은 Brown and Mason Group이 해체를 맡아 철강재의 <b>최대 97%를 재활용</b>할 계획이다.</p>
+      <div class="meta"><span class="tag hl">HTV 연관</span><a class="src" href="https://www.bbc.co.uk/news/articles/cwyey1y9d1wo" target="_blank" rel="noopener">BBC News</a></div>
+    </div>
+
+    <div class="article" id="art-vanoord-baltica">
+      <h3>Van Oord, 발트해 Baltica 2 해상풍력 모노파일 111기 설치 완료</h3>
+      <p>Van Oord가 폴란드령 발트해 1.5GW급 Baltica 2 해상풍력단지의 모노파일 기초 111기(터빈용 107기+변전소용 4기) 설치를 마쳤다. 설치선 Aeolus·Svanen 2척을 동시 투입해 공정을 앞당겼으며, 모노파일은 최대 길이 100m·지름 9.5~10.5m·중량 1,900톤에 달한다.</p>
+      <div class="meta"><span class="tag">해상풍력</span><a class="src" href="https://ocean-energyresources.com/2026/08/24/van-oord-completes-monopile-installation-at-baltica-2-owf/" target="_blank" rel="noopener">Ocean Energy Resources</a></div>
+    </div>
+
+    <div class="article" id="art-macgregor-lco2">
+      <h3>MacGregor, LCO₂ 직접 이송 시스템 개발...해상 CCS 인프라 비용 절감 기대</h3>
+      <p>MacGregor가 액화이산화탄소(LCO₂)를 운반선에서 해상 주입설비로 직접 이송하는 신형 Bow Transfer System을 개발했다. 1970년대부터 검증된 보우로딩 기술을 79% 재활용했으며, 영하 57도·파고 5~6m 환경에서도 안정적 연결이 가능하도록 SINTEF와 실링재 테스트를 거쳤다.</p>
+      <div class="meta"><span class="tag">CCS·탄소포집</span><a class="src" href="https://www.prnewswire.com/news-releases/macgregor-advances-direct-ship-to-well-lco-transfer-built-on-50-years-of-proven-bow-loading-technology-302858106.html" target="_blank" rel="noopener">MacGregor (PR Newswire)</a></div>
+    </div>
+
+    <div class="article" id="art-macgregor-horizon">
+      <h3>MacGregor Horizon 갱웨이, 부유식-부유식 인원 이송 DNV 인증 획득</h3>
+      <p>MacGregor의 워크투워크 갱웨이 'Horizon'이 이동 중인 두 부유식 설비 간 인원 이송(F2F)에 대해 DNV-ST-0358 기준 인증을 받았다. FPSO·부유식 해상풍력 등에서 고정 착륙점 없이도 해상에서 승선원 교대가 가능해져 항구 기항 없이 서비스 일정을 운용할 수 있게 됐다.</p>
+      <div class="meta"><a class="src" href="https://www.rivieramm.com/news-content-hub/macgregors-horizon-gangway-certified-for-floating-to-floating-personnel-transfer-89763" target="_blank" rel="noopener">Riviera Maritime Media</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="newbuild">
+    <div class="cat-head"><span class="idx">B</span><h2>조선·신조</h2><span class="cnt">6건</span></div>
+
+    <div class="article" id="art-yangzelng">
+      <h3>중국 민영 조선사 첫 대형 LNG선 'YANGZE LNG 01' 인도</h3>
+      <p>장쑤 양쯔장 조선그룹 산하 양쯔 신푸조선이 17.5만㎥급 대형 LNG운반선 YANGZE LNG 01을 인도했다. <b>중국 민영 조선소가 완공·인도한 첫 대형 LNG선</b>으로, GTT Mark III Flex 화물창과 이중연료 MAN 엔진을 탑재했으며 글로벌 상품거래社와 4~5년 기간용선 계약을 확보했다.</p>
+      <div class="meta"><span class="tag">LNG선</span><a class="src" href="https://lngprime.com/asia/yangzijiang-delivers-its-first-lng-carrier/195486/" target="_blank" rel="noopener">LNG Prime</a></div>
+    </div>
+
+    <div class="article" id="art-raycarcarriers">
+      <h3>이스라엘 Ray Car Carriers, 10억 달러 규모 PCTC 발주처를 한국서 중국으로</h3>
+      <p>이스라엘 선사 Ray Car Carriers가 8,600CEU급 대형 자동차운반선(PCTC) 시리즈를 광저우조선(GSI)에 약 10억 달러 규모로 발주할 것으로 알려졌다. 그동안 한국 조선소에 의존해온 발주 관행에서 벗어나는 행보로, <b>중국 조선업의 고부가가치 선종 경쟁력 상승</b>을 보여주는 사례로 꼽힌다.</p>
+      <div class="meta"><span class="tag hl">국내 조선 영향</span><a class="src" href="https://www.tradewindsnews.com/containers/ray-car-carriers-is-poised-to-splash-over-1bn-on-car-carrier-order-in-china/2-1-2030871" target="_blank" rel="noopener">TradeWinds</a></div>
+    </div>
+
+    <div class="article" id="art-hengli">
+      <h3>Hengli, 7월 전 세계 컨테이너선 발주 1위...중국 조선소 점유율 81%</h3>
+      <p>뱅크오브아메리카 8월 조선 데이터에 따르면 중국 헝리(Hengli) 조선소가 7월 전 세계 컨테이너선 신조 발주의 7.9%(연초 5.7%)를 차지하며 1위에 올랐다. 7월 전체 신조 발주는 중국 조선소가 81%를 가져갔고, 탱커 발주는 전년 대비 25% 늘어난 반면 벌커는 30% 줄어드는 등 선종별 온도차가 뚜렷했다.</p>
+      <div class="meta"><span class="tag">오더북</span><a class="src" href="https://id.investing.com/news/stock-market-news/hengli-raih-posisi-teratas-dalam-pesanan-kapal-kontainer-global-93CH-3054161" target="_blank" rel="noopener">Investing.com</a></div>
+    </div>
+
+    <div class="article" id="art-sanmar-saam">
+      <h3>Sanmar, SAAM Towage에 1년 새 여섯 번째 신조 예인선 인도</h3>
+      <p>튀르키예 Sanmar Shipyards가 콜롬비아 카르타헤나에 투입될 보아가이(Boğaçay)급 예인선 'SAAM CARIBE'를 SAAM Towage에 인도했다. 1년 안에 여섯 척째 인도로, 보라드풀 72톤·최고속력 13노트급 사양이다.</p>
+      <div class="meta"><span class="tag">예인선</span><a class="src" href="https://www.marinelink.com/news/sanmar-delivers-saam-caribe-tugboat-saam-542376" target="_blank" rel="noopener">Marine Link</a></div>
+    </div>
+
+    <div class="article" id="art-strategicmarine">
+      <h3>Strategic Marine, 싱가포르-빈탄 항로 신조 카타마란 1번선 인도</h3>
+      <p>싱가포르 Strategic Marine이 Bintan Resort Ferries가 발주한 43m급 여객 카타마란 3척 중 1번선 PUTRI MAYANG SARI를 인도했다. 최대 293명을 태울 수 있으며, 나머지 2척도 2026년 중 순차 인도될 예정이다.</p>
+      <div class="meta"><span class="tag">여객선</span><a class="src" href="https://www.marinelink.com/news/strategic-marine-delivers-first-new-542371" target="_blank" rel="noopener">Marine Link</a></div>
+    </div>
+
+    <div class="article" id="art-japan-subsidy">
+      <h3>일본, 5년간 950억 엔 규모 '무탄소 선박' 신조 보조금 개설</h3>
+      <p>일본 국토교통성·환경성이 수소·암모니아·메탄올·전기 추진 선박에 대해 5년간 총 151억 엔 규모의 보조금 프로그램을 개설했다. 수소·암모니아·전기 추진 설비는 비용의 최대 절반을, 메탄올·하이브리드는 최대 3분의 1을 지원하며 2031년 1월까지 운영된다.</p>
+      <div class="meta"><span class="tag">친환경 추진</span><a class="src" href="https://splash247.com/japan-opens-95m-zero-emission-ship-subsidy-pot/" target="_blank" rel="noopener">Splash247</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="container">
+    <div class="cat-head"><span class="idx">C</span><h2>컨테이너선</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-hanjin">
+      <h3>한진해운 파산 10년...법원, 회생 결정 구조 재검토</h3>
+      <p>2016년 한진해운 파산 10주년을 맞아 서울회생법원이 법원 선임 조사위원의 청산가치·계속기업가치 평가에만 의존해온 회생 여부 판단 구조를 재검토하고 있다. 당시 저점에서 산정된 청산가치가 이후 사상 최대 컨테이너 호황을 예견하지 못했다는 반성이 배경으로, 한국해양수산개발원(KMI)은 이달 '한국해운사 태스크포스'를 출범시켰다.</p>
+      <div class="meta"><span class="tag">국내 해운사</span><a class="src" href="https://splash247.com/hanjin-collapse-still-shapes-korean-bankruptcy-law-a-decade-on/" target="_blank" rel="noopener">Splash247</a></div>
+    </div>
+
+    <div class="article" id="art-hapag-surcharge">
+      <h3>Hapag-Lloyd, 라인강 저수위로 중부유럽행 '체선 할증료' 신설</h3>
+      <p>Hapag-Lloyd가 라인강 저수위로 인한 내륙운송 지연을 이유로 안트베르펜·로테르담 경유 중부유럽행 화물에 컨테이너·TEU당 50유로의 체선 할증료를 신설했다. FMC 비대상 화물은 9월 1일부터, FMC 대상 화물은 9월 20일부터 적용된다.</p>
+      <div class="meta"><span class="tag">할증료</span><a class="src" href="https://container-news.com/hapag-lloyd-introduces-central-europe-congestion-surcharge/" target="_blank" rel="noopener">Container News</a></div>
+    </div>
+
+    <div class="article" id="art-hapagzim-as3">
+      <h3>Hapag-Lloyd·Zim, 아시아-브라질 신규 노선 'AS3' 공동 개설</h3>
+      <p>Hapag-Lloyd와 Zim이 9월 13일부터 상하이·닝보·샤먼·홍콩·옌톈과 브라질 히우그란지·파라나과·이타자이·산투스·리우데자네이루를 잇는 주간 정기항로 AS3를 신설한다. 기존 AS2·ASE 서비스는 그대로 유지되며, 중국-브라질 교역 확대에 대응한 증편 성격이다.</p>
+      <div class="meta"><span class="tag">신규 항로</span><a class="src" href="https://www.hapag-lloyd.com/en/services-information/news/2026/08/shipping-from-asia-to-south-america-east-coast--here-s-our-new-a.html" target="_blank" rel="noopener">Hapag-Lloyd</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="routes">
+    <div class="cat-head"><span class="idx">D</span><h2>항로·운하·항만</h2><span class="cnt">4건</span></div>
+
+    <div class="article" id="art-panama">
+      <h3>파나마 운하 개통 112주년...2035 비전플랜에 에너지 회랑 포함</h3>
+      <p>파나마 운하청이 개통 112주년을 맞아 2025~2035 비전플랜을 통해 코로살 컨테이너 환적터미널, 텔퍼스 터미널 신설과 프로판·부탄·에탄 수송용 76km 에너지 회랑 건설을 추진 중이다. 다만 엘니뇨로 인한 가뭄으로 8월 말 기준 <b>네오파나막스 최대 흘수를 48피트로 제한</b>하는 등 수자원 관리가 최대 과제로 떠올랐다.</p>
+      <div class="meta"><span class="tag">운하</span><a class="src" href="https://www.allaboutshipping.co.uk/2026/08/17/panama-canal-marks-112-years-of-operations-with-a-forward-looking-vision/" target="_blank" rel="noopener">All About Shipping</a></div>
+    </div>
+
+    <div class="article" id="art-rhine">
+      <h3>라인강 수위 반등...카우프 게이지 42→56cm, 선적 제한 일부 완화</h3>
+      <p>폭우로 라인강 카우프(Kaub) 수위 기준점이 8월 24일 56cm까지 올라 전날(42cm)·8월 17일(6cm) 대비 회복세를 보였다. 다만 정상 만재 운항에 필요한 250~260cm에는 크게 못 미쳐, 뒤스부르크항 입항 척수는 여전히 평시 대비 50~60% 늘어난 상태다.</p>
+      <div class="meta"><span class="tag">내륙수운</span><span class="src">portnews</span></div>
+    </div>
+
+    <div class="article" id="art-ulsan">
+      <h3>울산항, 북극항로 정기 기항 위해 3자 MOU 체결</h3>
+      <p>울산항만공사가 네덜란드 Royal Wagenborg, 한국해양진흥공사(KOBC)와 북극항로 활성화 3자 MOU를 체결했다. 올해 최대 4척의 북극항로 선박이 울산항에 기항해 급유·양하할 예정이며, 지난 10년간 울산항의 북극항로 기항 실적은 국내 최다인 18회다.</p>
+      <div class="meta"><span class="tag">북극항로</span><a class="src" href="https://www.newsis.com/view/NISX20260820_0003756581" target="_blank" rel="noopener">Newsis</a></div>
+    </div>
+
+    <div class="article" id="art-khorfakkan">
+      <h3>UAE 코르파칸항, 처리능력 500만 TEU로 확장...장기 목표는 1,000만 TEU</h3>
+      <p>샤르자 소재 Gulftainer(Gulf Terminals Group)가 코르파칸 컨테이너터미널의 연간 처리능력을 기존 350만 TEU에서 500만 TEU로 늘렸으며, 장기적으로 1,000만 TEU 이상을 목표로 한다. 호르무즈 해협을 거치지 않고 오만만에 직접 접근 가능하다는 입지를 앞세워 20억 달러 규모 물류 인프라 투자 전략의 핵심으로 삼고 있다.</p>
+      <div class="meta"><span class="tag">항만 증설</span><a class="src" href="https://www.worldcargonews.com/news/2026/08/gulftainer-targets-10m-teu-at-khorfakkan/" target="_blank" rel="noopener">World Cargo News</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="geo">
+    <div class="cat-head"><span class="idx">E</span><h2>지정학·안보</h2><span class="cnt">3건</span></div>
+
+    <div class="article" id="art-hormuz-blockade">
+      <h3>美 봉쇄망 뚫은 이란계 컨테이너선...호르무즈 통항량은 이틀새 17척으로 급감</h3>
+      <p>미국 재무부 제재 대상에 오른 이란계 컨테이너선이 미 해군의 봉쇄를 뚫고 이란 영해로 진입, 항구에 접안한 것으로 확인됐다. 같은 날 미국이 이란에 대한 고강도 제재 'D-Day'를 발표한 가운데, 호르무즈 해협 통항 선박은 최근 이틀간 17척(토요일 13척·일요일 4척)에 그쳐 통항량이 급격히 위축된 것으로 나타났다.</p>
+      <div class="meta"><span class="tag hl">탱커·유조선 리스크</span><a class="src" href="https://wanaen.com/iranian-linked-container-ship-breaches-us-blockade-on-d-day/" target="_blank" rel="noopener">WANA News Agency</a></div>
+    </div>
+
+    <div class="article" id="art-mischiefreef">
+      <h3>남중국해 미스치프 암초 인근에 중국 선박 200척 이상 집결</h3>
+      <p>일본 아사히신문이 민간 안보분석기관 DEEP DIVE를 인용, 필리핀령 세컨드 토마스 숄 인근 미스치프 암초에 집결한 중국 선박이 5월 중순 40척 미만에서 7월 3일 228척까지 급증했다고 보도했다. 20척 이상이 뗏목형으로 밀착 정박한 이례적 형태가 확인돼, 중국이 세컨드 토마스 숄 통제권 확대를 위한 사전 포석일 가능성이 제기된다.</p>
+      <div class="meta"><span class="tag">남중국해</span><a class="src" href="https://www.upi.com/Top_News/World-News/2026/08/23/south-china-sea-philippines-Spratly-Islands/3851787528866/" target="_blank" rel="noopener">UPI</a></div>
+    </div>
+
+    <div class="article" id="art-kongsberg">
+      <h3>노르웨이 콩스버그, '다크선박' 추적 위성 6기로 확충</h3>
+      <p>노르웨이 Kongsberg가 2027년 초까지 해상감시 위성군 N3X를 기존 3기에서 6기로 늘려 AIS를 끄고 운항하는 '다크선박'과 AIS 조작 탐지 역량을 강화한다. 노르웨이군 우주작전센터의 수요 증가에 대응한 조치로, 상업 고객에도 데이터를 제공할 예정이다.</p>
+      <div class="meta"><span class="tag">해상감시</span><a class="src" href="https://en.portnews.ru/news/395945/" target="_blank" rel="noopener">PortNews</a></div>
+    </div>
+  </section>
+
+  <section class="cat" id="safety">
+    <div class="cat-head"><span class="idx">F</span><h2>안전·사고</h2><span class="cnt">1건</span></div>
+
+    <div class="article" id="art-bangladesh-shipbreaking">
+      <h3>방글라데시 해체장서 근로자 9명 유독가스 참사...환경당국 벌금은 단돈 4천 달러</h3>
+      <p>방글라데시 치타공 시타쿤다의 Ferdous Steel 해체장에서 8월 14일 선박 'Rasi' 밸러스트탱크 작업 중 황화수소(H₂S) 유독가스로 근로자 9명이 숨졌다. 환경당국은 만료된 환경인증을 이유로 뒤늦게 50만 타카(약 4천 달러)의 벌금만 부과해, 사고 원인 규명과 처벌 수위를 둘러싼 논란이 커지고 있다.</p>
+      <div class="meta"><span class="tag hl">선박 해체 안전</span><a class="src" href="https://www.marineinsight.com/bangladesh-shipbreaking-yard-fined-4000-after-toxic-gas-exposure-kills-nine-workers/" target="_blank" rel="noopener">Marine Insight</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="note">본 브리핑은 원문 뉴스레터를 분석해 카테고리별로 재구성·번역한 것입니다. 선박 사진 캡션 등 순수 화보성 항목 4건과, 해운·조선업과 직접 관련성이 낮은 기사 10건(네덜란드 구조장비 기부·내륙선 항해일지 벌금 소송·갑문 운항 통제 공지 등 지역성 소식 3건, 보험사(Swedish Club) 정기 실적 발표 1건, 기업 파트너십 홍보성 소식 1건, 미 해군 항공모함 개명 논란·USS Abraham Lincoln 장기배치 병참난·호주 해군기지 투자·필리핀/인도 해안경비정 인수·퇴역 등 상업 해운 시장과 직접 관련성이 낮은 군사·안보 인사 기사 5건)는 제외했습니다. 각 기사의 "출처"는 별도 조사를 통해 확인된 원문 기사에 하이퍼링크로 연결했으며, 원본이 표기한 출처와 실제로 확인된 게재처가 다른 경우 실제 링크된 게재처명으로 갱신했습니다. 1건(portnews)은 원문 게재처를 특정하지 못해 출처명만 표기하고 링크는 연결하지 않았습니다. 시장·투자 판단 시 원출처를 직접 확인하시기 바랍니다.</p>
+    <p class="gen">Generated 2026-08-27 · Source file: Google Drive / 227-26-08-2026.pdf</p>
+  </footer>
+
+</main>
+
+<button class="back-to-top" id="backToTop" aria-label="맨 위로 이동" title="맨 위로">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+</button>
+
+<script>
+  (function(){
+    var sunPath = 'M12 4.5V2.5M12 21.5v-2M4.5 12H2.5M21.5 12h-2M6 6 4.6 4.6M19.4 19.4 18 18M18 6l1.4-1.4M4.6 19.4 6 18M12 16.5A4.5 4.5 0 1 0 12 7.5a4.5 4.5 0 0 0 0 9Z';
+    var moonPath = 'M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z';
+    var icon = document.getElementById('themeIcon');
+    var btn = document.getElementById('themeToggle');
+    function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+    function currentIsDark(){
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark') return true;
+      if (t === 'light') return false;
+      return systemDark();
+    }
+    function paintIcon(){
+      var dark = currentIsDark();
+      icon.innerHTML = '<path d="' + (dark ? moonPath : sunPath) + '"></path>';
+    }
+    btn.addEventListener('click', function(){
+      var next = currentIsDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      paintIcon();
+    });
+    paintIcon();
+  })();
+
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var panel = document.getElementById('menuPanel');
+    function closeMenu(){
+      panel.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu(){
+      panel.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (panel.hidden) openMenu(); else closeMenu();
+    });
+    panel.addEventListener('click', function(e){
+      if (e.target.tagName === 'A') closeMenu();
+    });
+    document.addEventListener('click', function(e){
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) closeMenu();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMenu();
+    });
+  })();
+
+  (function(){
+    var btn = document.getElementById('backToTop');
+    function update(){
+      if (window.scrollY > 480) btn.classList.add('show');
+      else btn.classList.remove('show');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    update();
+  })();
+</script>
+
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script defer src="/auth-gate.js"></script>
+
+</body>
+</html>
